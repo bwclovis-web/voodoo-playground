@@ -14,7 +14,7 @@ module.exports = {
     es6: true,
   },
   ignorePatterns: ["!**/.server", "!**/.client"],
-  extends: ["eslint:recommended"],
+  extends: ["eslint:recommended", "plugin:storybook/recommended"],
   overrides: [
     // React
     {
