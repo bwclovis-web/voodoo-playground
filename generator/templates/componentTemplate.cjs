@@ -5,7 +5,7 @@ function generateComponentTemplate(componentName) {
   return `import { VariantProps, cva } from "class-variance-authority"
 import { FC, HTMLProps } from "react"
 
-import { styleMerge } from "~/Utils/utils"
+import { styleMerge } from "~/utils/styleUtils"
 
 interface ${componentName}Props extends HTMLProps<HTMLDivElement>,
   VariantProps<typeof ${lowerComponentName}Variants> { }
