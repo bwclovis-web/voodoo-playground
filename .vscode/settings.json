@@ -12,5 +12,12 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": "always"
   },
-  "cSpell.words": ["camelcase", "iife", "isbot", "Pipeable", "typecheck"]
+  "cSpell.words": [
+    "camelcase",
+    "iife",
+    "isbot",
+    "picocolors",
+    "Pipeable",
+    "typecheck"
+  ]
 }
