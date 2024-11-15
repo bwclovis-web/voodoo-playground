@@ -8,9 +8,14 @@
     "create:component": "node generator/create-component.cjs",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "dev": "node ./server.mjs",
+    "db:generate": "prisma generate",
+    "db:docs": "prisma generate && prisma-docs-generator serve",
+    "db:serve": "prisma db pull && prisma db push && concurrently  \"npm run db:studio\" \"npm run db:docs\" \"npm run dev\"",
+    "dev": "concurrently \"npm run start:server\" \"npm run start:localhost\"",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "cross-env NODE_ENV=production node ./server.mjs",
+    "start:localhost": "start http://localhost:5150",
+    "start:server": "node ./server.mjs",
     "typecheck": "tsc"
   },
   "dependencies": {
@@ -32,6 +37,7 @@
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
     "autoprefixer": "^10.4.19",
+    "concurrently": "^9.1.0",
     "eslint": "^8.38.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.28.1",

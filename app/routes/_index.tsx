@@ -1,8 +1,8 @@
 import type { MetaFunction } from "@remix-run/node"
 
 export const meta: MetaFunction = () => [
-  { title: "New Remix App" },
-  { name: "description", content: "Welcome to Remix!" }
+  { title: "Voodoo Stack" },
+  { content: "Welcome to Remix!", name: "description" }
 ]
 
 export default function Index() {
