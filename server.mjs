@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import crypto from 'crypto'
 import process from 'node:process'
 
 import prom from '@isaacs/express-prometheus-middleware'
@@ -7,6 +8,7 @@ import { installGlobals } from '@remix-run/node'
 import compression from 'compression'
 import express from 'express'
 import { rateLimit } from 'express-rate-limit'
+import helmet from 'helmet'
 import morgan from 'morgan'
 
 installGlobals()
@@ -68,6 +70,33 @@ app.use(prom({
   metricsPath: "/metrics"
 }))
 
+app.use((_, res, next) => {
+  res.locals.cspNonce = crypto.randomBytes(16).toString('hex')
+  next()
+})
+
+app.use(helmet({
+  contentSecurityPolicy: {
+    crossOriginEmbedderPolicy: false,
+      directives: {
+        'connect-src': [ NODE_ENV === 'development' ? 'ws:' : null, "'self'" ].filter(Boolean),
+        'font-src': [ "'self'" ],
+        'frame-src': [ "'self'" ],
+        'img-src': [ "'self'", 'data:' ],
+        'script-src': [
+          "'strict-dynamic'",
+          "'self'",
+          (_, res) => `'nonce-${res.locals.cspNonce}'`
+        ],
+        'script-src-attr': [ (_, res) => `'nonce-${res.locals.cspNonce}'` ],
+        'upgrade-insecure-requests': null
+      },
+      // ❗Important: Remove `reportOnly` to enforce CSP. (Development only).
+      referrerPolicy: { policy: 'same-origin' },
+      reportOnly: true
+    }
+  }))
+
 // Clean paths with trailing slashes
 app.use((req, res, next) => {
   if (req.path.endsWith('/') && req.path.length > 1) {
@@ -97,7 +126,10 @@ app.all(
   createRequestHandler({
     build: viteDevServer
       ? () => viteDevServer.ssrLoadModule("virtual:remix/server-build")
-      : await import("./build/server/index.js")
+      : await import("./build/server/index.js"),
+    getLoadContext: (_, res) => ({
+      cspNonce: res.locals.cspNonce
+    })
   })
 )
 
