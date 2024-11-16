@@ -6,11 +6,14 @@ import { createRequestHandler } from '@remix-run/express'
 import { installGlobals } from '@remix-run/node'
 import compression from 'compression'
 import express from 'express'
+import { rateLimit } from 'express-rate-limit'
 import morgan from 'morgan'
 
 installGlobals()
-const metricsPort = process.env.METRICS_PORT || 3030
-const port = process.env.APP_PORT || 5150
+const METRICS_PORT = process.env.METRICS_PORT || 3030
+const PORT = process.env.APP_PORT || 5150
+const NODE_ENV = process.env.NODE_ENV ?? 'development'
+const MAX_LIMIT_MULTIPLE = NODE_ENV !== 'production' ? 10_000 : 1
 
 const viteDevServer =
   process.env.NODE_ENV === "production"
@@ -18,6 +21,26 @@ const viteDevServer =
     : await import("vite").then(vite => vite.createServer({
           server: { middlewareMode: true }
         }))
+
+const defaultRateLimit = {
+  legacyHeaders: false,
+  max: 1000 * MAX_LIMIT_MULTIPLE,
+  standardHeaders: true,
+  windowMs: 60 * 1000
+}
+
+const strongestRateLimit = rateLimit({
+  ...defaultRateLimit,
+  max: 10 * MAX_LIMIT_MULTIPLE,
+  windowMs: 60 * 1000
+})
+
+const strongRateLimit = rateLimit({
+  ...defaultRateLimit,
+  max: 100 * MAX_LIMIT_MULTIPLE,
+  windowMs: 60 * 1000
+})
+const generalRateLimit = rateLimit(defaultRateLimit)
 
 const app = express()
 const metricsApp = express()
@@ -56,6 +79,18 @@ app.use((req, res, next) => {
   }
 })
 
+// eslint-disable-next-line complexity
+app.use((req, res, next) => {
+  const STRONG_PATHS = [ '/auth/login' ]
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    if (STRONG_PATHS.some(path => req.path.includes(path))) {
+      return strongestRateLimit(req, res, next)
+    }
+    return strongRateLimit(req, res, next)
+  }
+  return generalRateLimit(req, res, next)
+})
+
 // handle SSR requests
 app.all(
   "*",
@@ -67,5 +102,5 @@ app.all(
 )
 
 
-app.listen(port, () => console.log(`🤘 server running: http://localhost:${port}`))
-metricsApp.listen(metricsPort, () => console.log(`✅ metrics ready: http://localhost:${metricsPort}/metrics`))
+app.listen(PORT, () => console.log(`🤘 server running: http://localhost:${PORT}`))
+metricsApp.listen(METRICS_PORT, () => console.log(`✅ metrics ready: http://localhost:${METRICS_PORT}/metrics`))
