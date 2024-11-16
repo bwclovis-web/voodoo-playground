@@ -3,10 +3,12 @@ const pColor = require('picocolors')
 const generateComponentTemplate = require("../templates/componentTemplate.cjs")
 const generateVariantTemplate = require("../templates/variantTemplate.cjs")
 const generateStoryTemplate = require("../templates/storyTemplate.cjs")
+const generateViteTestTemplate = require("../templates/viteTestTemplate.cjs")
 const scaffoldFactory = require("./scaffoldFactory.cjs")
 
 const generateTemplate = (name, type) => {
   const lowerComponentName = name.toLocaleLowerCase()
+
   const componentPath = scaffoldFactory(
     path.join(`app/components/${type}`, name),
     generateComponentTemplate(name),
@@ -19,12 +21,17 @@ const generateTemplate = (name, type) => {
     `${lowerComponentName}-variants.ts`
   )
 
+  const viteTestPath = scaffoldFactory(
+    path.join(`app/components/${type}`, name),
+    generateViteTestTemplate(name),
+    `${name}.test.tsx`
+  )
+
   const storyPath = scaffoldFactory(
     `stories/${type}`,
     generateStoryTemplate(name, type),
     `${name}.stories.ts`
   )
-
 
   if(componentPath) {
     console.log('👍', pColor.green(`Component ${name} created successfully`))
@@ -34,7 +41,10 @@ const generateTemplate = (name, type) => {
     console.log('🎨', pColor.bgMagentaBright(`Variants available in ${variantPath}`)  )
   }
   if(storyPath) {
-    console.log('📔', pColor.bgBlueBright(`Component available in ${storyPath}`))
+    console.log('📔', pColor.bgBlueBright(`Storybook Story available in ${storyPath}`))
+  }
+  if(viteTestPath) {
+    console.log('🧪', pColor.bgYellowBright(`Vite test available in ${viteTestPath}`))
   }
   return true
 }

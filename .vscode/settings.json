@@ -12,6 +12,8 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": "always"
   },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
   "cSpell.words": [
     "autodocs",
     "camelcase",
