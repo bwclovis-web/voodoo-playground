@@ -1,26 +1,25 @@
 function generateStoryTemplate(componentName, componentType) {
-const lowerComponentName = componentName.toLocaleLowerCase()
   
-return `
-import type { Meta, StoryObj } from '@storybook/react'
+return `import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
+
 import ${componentName} from '~/components/${componentType}/${componentName}/${componentName}'
 
 const meta = {
-  title: '${componentType}/${componentName}',
+  argTypes: {},
+  args: { onClick: fn() },
   component: ${componentName},
   parameters: {
-    layout: 'centered',
+    layout: 'centered'
   },
   tags: ['autodocs'],
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
-  args: { onClick: fn() },
+  title: '${componentType}/${componentName}'
 } satisfies Meta<typeof ${componentName}>
   
 export default meta
 type Story = StoryObj<typeof meta>
-  `
+// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
+export const Default: Story = {}
+`
 }
 module.exports = generateStoryTemplate
