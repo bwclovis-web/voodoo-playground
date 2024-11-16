@@ -21,6 +21,7 @@
     "iife",
     "isaacs",
     "isbot",
+    "languagedetector",
     "picocolors",
     "Pipeable",
     "typecheck"

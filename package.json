@@ -33,10 +33,17 @@
     "compression": "^1.7.5",
     "cross-env": "^7.0.3",
     "express-rate-limit": "^7.4.1",
+    "i18next-browser-languagedetector": "^8.0.0",
+    "i18next-fetch-backend": "^6.0.0",
+    "i18next-fs-backend": "^2.3.2",
     "isbot": "^4.1.0",
     "morgan": "^1.10.0",
+    "pretty-cache-header": "^1.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "remix-i18next": "^6.4.1",
+    "vite-env-only": "^3.0.3",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",

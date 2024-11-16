@@ -1,4 +1,4 @@
-import type { LinksFunction } from "@remix-run/node"
+import { LinksFunction, LoaderFunctionArgs, data } from "@remix-run/node"
 import {
   Links,
   Meta,
@@ -8,6 +8,7 @@ import {
 } from "@remix-run/react"
 
 import "./tailwind.css"
+import i18nServer, { localeCookie } from "./modules/i18n/i18n.server"
 
 export const links: LinksFunction = () => [
   { href: "https://fonts.googleapis.com", rel: "preconnect" },
@@ -21,6 +22,14 @@ export const links: LinksFunction = () => [
     rel: "stylesheet"
   }
 ]
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  const locale = await i18nServer.getLocale(request)
+  return data(
+    { locale },
+    { headers: { "Set-Cookie": await localeCookie.serialize(locale) } }
+  )
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

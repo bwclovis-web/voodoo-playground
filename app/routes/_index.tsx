@@ -1,9 +1,19 @@
-import type { MetaFunction } from "@remix-run/node"
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
+import { Form, json } from "@remix-run/react"
 
-export const meta: MetaFunction = () => [
-  { title: "Voodoo Stack" },
+import i18nServer from "~/modules/i18n/i18n.server"
+
+export const meta: MetaFunction = ({ data }) => [
+  { title: data.title },
   { content: "Welcome to Remix!", name: "description" }
 ]
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  const t = await i18nServer.getFixedT(request)
+  return json({
+    title: t("title")
+  })
+}
 
 export default function Index() {
   return (
@@ -46,6 +56,20 @@ export default function Index() {
             ))}
           </ul>
         </nav>
+        <Form className="flex justify-evenly">
+          <details>
+            <summary className="cursor-pointer py-3 px-3 text-xl font-black">SELECT A LANGUAGE</summary>
+            <button type="submit" name="lng" value="es">
+              Español
+            </button>
+            <button type="submit" name="lng" value="fr">
+              Français
+            </button>
+            <button type="submit" name="lng" value="en">
+              English
+            </button>
+          </details>
+        </Form>
       </div>
     </div>
   )
