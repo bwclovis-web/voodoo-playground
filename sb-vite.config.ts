@@ -7,6 +7,6 @@ export default defineConfig(({ mode }) => {
   process.env = { ...process.env, ...env }
 
   return {
-    plugins: [tsconfigPaths()],
+    plugins: [tsconfigPaths()]
   }
 })

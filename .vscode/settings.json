@@ -19,6 +19,7 @@
     "camelcase",
     "clsx",
     "iife",
+    "isaacs",
     "isbot",
     "picocolors",
     "Pipeable",
