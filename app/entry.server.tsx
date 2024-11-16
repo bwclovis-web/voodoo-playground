@@ -5,7 +5,6 @@ import type { AppLoadContext, EntryContext } from "@remix-run/node"
 import { createReadableStreamFromReadable } from "@remix-run/node"
 import { RemixServer } from "@remix-run/react"
 import { createInstance, i18n as i18next } from "i18next"
-import Backend from "i18next-fetch-backend"
 import { isbot } from "isbot"
 import { renderToPipeableStream } from "react-dom/server"
 import { I18nextProvider, initReactI18next } from "react-i18next"
@@ -25,9 +24,12 @@ export default async function handleRequest(
   const lng = await i18nServer.getLocale(request)
   const ns = i18nServer.getRouteNamespaces(remixContext)
 
-  await instance.use(initReactI18next)
-    .use(Backend)
-    .init({ ...i18n, lng, ns, backend: { loadPath: "./public/locales/{{lng}}/{{ns}}.json" } })
+  await instance.use(initReactI18next).init({
+    ...i18n,
+    lng,
+    ns,
+    resources: i18n.resources
+  })
 
   return isbot(request.headers.get("user-agent") || "")
     ? handleBotRequest(
