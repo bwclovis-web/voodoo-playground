@@ -25,6 +25,7 @@
     "languagedetector",
     "picocolors",
     "Pipeable",
-    "typecheck"
+    "typecheck",
+    "webp"
   ]
 }
