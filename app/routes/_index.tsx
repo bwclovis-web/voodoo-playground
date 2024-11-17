@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
-import { Form, json } from "@remix-run/react"
+import { Form } from "@remix-run/react"
 
 import i18nServer from "~/modules/i18n/i18n.server"
 
@@ -13,9 +13,9 @@ export const meta: MetaFunction = ({ data }) => {
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const t = await i18nServer.getFixedT(request)
-  return json({
+  return {
     title: t("title")
-  })
+  }
 }
 
 export default function Index() {
@@ -59,20 +59,6 @@ export default function Index() {
             ))}
           </ul>
         </nav>
-        <Form className="flex justify-evenly">
-          <details>
-            <summary className="cursor-pointer py-3 px-3 text-xl font-black">SELECT A LANGUAGE</summary>
-            <button type="submit" name="lng" value="es">
-              Español
-            </button>
-            <button type="submit" name="lng" value="fr">
-              Français
-            </button>
-            <button type="submit" name="lng" value="en">
-              English
-            </button>
-          </details>
-        </Form>
       </div>
     </div>
   )
