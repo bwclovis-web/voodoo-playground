@@ -59,6 +59,7 @@
     "@storybook/react-vite": "^8.4.4",
     "@storybook/test": "^8.4.4",
     "@stylistic/eslint-plugin-js": "^2.10.1",
+    "@stylistic/eslint-plugin-jsx": "^2.10.1",
     "@testing-library/react": "^16.0.1",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",

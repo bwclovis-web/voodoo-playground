@@ -1,22 +1,9 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node"
-import { Form } from "@remix-run/react"
+import type { MetaFunction } from "@remix-run/node"
 
-import i18nServer from "~/modules/i18n/i18n.server"
-
-export const meta: MetaFunction = ({ data }) => {
-  const { title } = data as { title: string }
-  return [
-    { title },
-    { content: "Welcome to Remix!", name: "description" }
-  ]
-}
-
-export async function loader({ request }: LoaderFunctionArgs) {
-  const t = await i18nServer.getFixedT(request)
-  return {
-    title: t("title")
-  }
-}
+export const meta: MetaFunction = () => [
+  { title: "Voodoo Stack" },
+  { content: "Welcome to Remix!", name: "description" }
+]
 
 export default function Index() {
   return (

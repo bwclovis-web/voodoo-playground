@@ -19,7 +19,7 @@ module.exports = {
     // React
     {
       files: ["**/*.{js,jsx,ts,tsx}"],
-      plugins: ["react", "jsx-a11y"],
+      plugins: ["react", "jsx-a11y", "stylisticJsx"],
       extends: [
         "plugin:react/recommended",
         "plugin:react/jsx-runtime",
@@ -39,6 +39,9 @@ module.exports = {
           typescript: {},
         },
       },
+      rules: {
+        "jsx/curly-newline": ["error", "always"],
+      }
     },
     // Typescript
     {
@@ -113,7 +116,6 @@ module.exports = {
         "comma-dangle": ["error", "never"],
         "comma-spacing": "error",
         "computed-property-spacing": ["error", "never"],
-        "curly-newline": ["error", "always"],
         "dot-location": ["error", "property"],
         "eol-last": ["error", "always"],
         "function-call-spacing": ["error", "never"],
