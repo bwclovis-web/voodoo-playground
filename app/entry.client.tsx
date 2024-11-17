@@ -1,6 +1,7 @@
 /* eslint-disable import/no-named-as-default-member */
 import { RemixBrowser } from "@remix-run/react"
 import i18next from "i18next"
+import Fetch from "i18next-fetch-backend"
 import I18nextBrowserLanguageDetector from "i18next-browser-languagedetector"
 import { StrictMode, startTransition } from "react"
 import { hydrateRoot } from "react-dom/client"
@@ -11,13 +12,17 @@ import { defaultNS, fallbackLng, supportedLngs } from "~/modules/i18n/i18n"
 
 async function main() {
   await i18next
-    .use(initReactI18next) // Tell i18next to use the react-i18next plugin
+    .use(initReactI18next)
+    .use(Fetch) // Tell i18next to use the react-i18next plugin
     .use(I18nextBrowserLanguageDetector)
     .init({
       defaultNS,
       detection: {
         caches: [],
         order: ["htmlTag"]
+      },
+      backend: {
+        loadPath: "/api/locales?lng={{lng}}&ns={{ns}}",
       },
       fallbackLng,
       ns: getInitialNamespaces(),

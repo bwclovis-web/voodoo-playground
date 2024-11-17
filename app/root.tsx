@@ -4,13 +4,17 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
+  ScrollRestoration,
+  useLoaderData,
+  useRouteLoaderData
 } from "@remix-run/react"
+import { useNonce } from "./hooks/use-nonce"
+import i18nServer, { localeCookie } from "./modules/i18n/i18n.server"
+import { useChangeLanguage } from "remix-i18next/react"
 
 import stylesheet from "~/styles/tailwind.css?url"
 
-import { useNonce } from "./hooks/use-nonce"
-import i18nServer, { localeCookie } from "./modules/i18n/i18n.server"
+export const handle = { i18n: ["translation"] }
 
 export const links: LinksFunction = () => [{ href: stylesheet, rel: "stylesheet" }]
 
@@ -24,8 +28,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const nonce = useNonce()
+  const loaderData = useRouteLoaderData<typeof loader>("root")
+
   return (
-    <html lang="en">
+    <html lang={loaderData?.locale ?? "en"}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -42,5 +48,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const { locale } = useLoaderData<typeof loader>();
+  useChangeLanguage(locale);
   return <Outlet />
 }
