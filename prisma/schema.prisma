@@ -8,8 +8,8 @@ generator docs {
 
 generator typescriptInterfaces {
   provider    = "prisma-generator-typescript-interfaces"
-  modelSuffix = "Type"
   modelType   = "type"
+  modelSuffix = "Type"
 }
 
 datasource db {
@@ -21,4 +21,12 @@ model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
+}
+
+model Feature {
+  id        Int      @id @default(autoincrement())
+  summary   String
+  detail    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

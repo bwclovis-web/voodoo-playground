@@ -67,6 +67,7 @@ async function handleBotRequest(
             context={remixContext}
             url={request.url}
             abortDelay={ABORT_DELAY}
+            nonce={nonce}
           />
         </I18nextProvider>
       </NonceProvider>,
@@ -119,6 +120,7 @@ async function handleBrowserRequest(
             context={remixContext}
             url={request.url}
             abortDelay={ABORT_DELAY}
+            nonce={nonce}
           />
         </I18nextProvider>
       </NonceProvider>,

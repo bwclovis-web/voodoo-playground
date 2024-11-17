@@ -31,7 +31,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const loaderData = useRouteLoaderData<typeof loader>("root")
 
   return (
-    <html lang={loaderData?.locale ?? "en"}>
+    <html lang={loaderData?.locale ?? "en"} className="h-full">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

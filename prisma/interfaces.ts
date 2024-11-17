@@ -5,3 +5,11 @@ export type UserType = {
   email: string;
   name: string | null;
 };
+
+export type FeatureType = {
+  id: number;
+  summary: string;
+  detail: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
