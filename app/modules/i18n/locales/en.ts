@@ -3,10 +3,10 @@ export default {
   home: {
     meta: {
       title: "Voodoo Stack",
-      description: "Welcome to Remix!",
+      description: "Welcome to Remix!"
     },
     heading: "Voodoo Stack",
     subTitle: "A full featured stack for Remix",
-    featuresHeading: "Features",
+    featuresHeading: "Features"
   }
 }
