@@ -1,5 +1,7 @@
 export default {
-  global: {},
+  global: {
+    languageSelector: "Sélectionnez une langue"
+  },
   home: {
     meta: {
       title: "Pile Voodoo",

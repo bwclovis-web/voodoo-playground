@@ -1,5 +1,7 @@
 export default {
-  global: {},
+  global: {
+    languageSelector: "Selecciona un idioma"
+  },
   home: {
     meta: {
       title: "Pila de vudú",

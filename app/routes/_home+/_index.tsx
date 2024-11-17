@@ -62,7 +62,7 @@ export default function Index() {
         <p className="text-xl font-semibold tracking-wide mb-5">{t("home.subTitle")}</p>
         <Form className="flex justify-evenly">
           <details>
-            <summary className="cursor-pointer py-3 px-3 text-xl font-black">SELECT A LANGUAGE</summary>
+            <summary className="cursor-pointer py-3 px-3 text-xl font-black">{t("global.languageSelector")}</summary>
             <Button type="submit" name="lng" value="es">
               Español
             </Button>

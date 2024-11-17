@@ -1,5 +1,7 @@
 export default {
-  global: {},
+  global: {
+    languageSelector: "Select a language"
+  },
   home: {
     meta: {
       title: "Voodoo Stack",
