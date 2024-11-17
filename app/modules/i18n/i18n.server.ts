@@ -1,3 +1,5 @@
+import Backend from "i18next-fs-backend"
+import { resolve } from "node:path"
 import { createCookie } from "@remix-run/node"
 import { RemixI18Next } from "remix-i18next/server"
 
@@ -17,6 +19,9 @@ export default new RemixI18Next({
     supportedLanguages: i18n.supportedLngs
   },
   i18next: {
-    ...i18n
+    ...i18n,
+    backend: {
+      loadPath: resolve("./public/locales/{{lng}}/{{ns}}.json"),
+    },
   }
 })
