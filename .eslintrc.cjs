@@ -74,7 +74,7 @@ module.exports = {
         "func-names": ["error", "as-needed"],
         "func-style": ["error", "declaration", { "allowArrowFunctions": true }],
         "guard-for-in": "error",
-        "id-denylist": ["error", "data", "callback"],
+        "id-denylist": ["error", "callback"],
         "id-length": ["error", { "min": 3, "max": 40, "properties": "never", "exceptions": ["_", "__", "i", "j", "fs", 't'] }],
         "import/order": ["error",
           {

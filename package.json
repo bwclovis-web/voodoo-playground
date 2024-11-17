@@ -23,6 +23,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.1",
     "@isaacs/express-prometheus-middleware": "^1.2.1",
     "@prisma/client": "^5.22.0",
     "@remix-run/node": "^2.14.0",
@@ -33,6 +34,7 @@
     "compression": "^1.7.5",
     "cross-env": "^7.0.3",
     "express-rate-limit": "^7.4.1",
+    "gsap": "^3.12.5",
     "helmet": "^8.0.0",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-fs-backend": "^2.3.2",

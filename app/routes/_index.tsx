@@ -3,10 +3,13 @@ import { Form, json } from "@remix-run/react"
 
 import i18nServer from "~/modules/i18n/i18n.server"
 
-export const meta: MetaFunction = ({ data }) => [
-  { title: data.title },
-  { content: "Welcome to Remix!", name: "description" }
-]
+export const meta: MetaFunction = ({ data }) => {
+  const { title } = data as { title: string }
+  return [
+    { title },
+    { content: "Welcome to Remix!", name: "description" }
+  ]
+}
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const t = await i18nServer.getFixedT(request)
