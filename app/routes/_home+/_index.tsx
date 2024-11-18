@@ -15,6 +15,8 @@ interface MetaData {
   description: string;
 }
 
+import { useOptionalUser } from "~/utils/userUtils"
+
 import banner from "../../images/voodoo.webp"
 
 export const meta: MetaFunction = ({ data }: { data: MetaData }) => [
@@ -31,11 +33,16 @@ export async function loader({ request }: LoaderFunctionArgs) {
     title: t("home.meta.title")
   }
 }
+
+
 gsap.registerPlugin(useGSAP)
 export default function Index() {
   const { t } = useTranslation()
   const container = useRef<HTMLDivElement>(null)
   const { features } = useLoaderData<typeof loader>()
+  const user = useOptionalUser()
+
+  console.log(`%c user`, 'background: #0047ab; color: #fff; padding: 2px:', user)
 
   useGSAP(
     () => {
