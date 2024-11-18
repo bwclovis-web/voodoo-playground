@@ -25,6 +25,7 @@
     "languagedetector",
     "picocolors",
     "Pipeable",
+    "totp",
     "typecheck",
     "webp"
   ]

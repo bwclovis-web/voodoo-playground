@@ -75,27 +75,27 @@ app.use((_, res, next) => {
   next()
 })
 
-app.use(helmet({
-  contentSecurityPolicy: {
-    crossOriginEmbedderPolicy: false,
-      directives: {
-        'connect-src': [ NODE_ENV === 'development' ? 'ws:' : null, "'self'" ].filter(Boolean),
-        'font-src': [ "'self'" ],
-        'frame-src': [ "'self'" ],
-        'img-src': [ "'self'", 'data:' ],
-        'script-src': [
-          "'strict-dynamic'",
-          "'self'",
-          (_, res) => `'nonce-${res.locals.cspNonce}'`
-        ],
-        'script-src-attr': [ (_, res) => `'nonce-${res.locals.cspNonce}'` ],
-        'upgrade-insecure-requests': null
-      },
-      // ❗Important: Remove `reportOnly` to enforce CSP. (Development only).
-      referrerPolicy: { policy: 'same-origin' },
-      reportOnly: true
-    }
-  }))
+// app.use(helmet({
+//   contentSecurityPolicy: {
+//     crossOriginEmbedderPolicy: false,
+//       directives: {
+//         'connect-src': [ NODE_ENV === 'development' ? 'ws:' : null, "'self'" ].filter(Boolean),
+//         'font-src': [ "'self'" ],
+//         'frame-src': [ "'self'" ],
+//         'img-src': [ "'self'", 'data:' ],
+//         'script-src': [
+//           "'strict-dynamic'",
+//           "'self'",
+//           (_, res) => `'nonce-${res.locals.cspNonce}'`
+//         ],
+//         'script-src-attr': [ (_, res) => `'nonce-${res.locals.cspNonce}'` ],
+//         'upgrade-insecure-requests': null
+//       },
+//       // ❗Important: Remove `reportOnly` to enforce CSP. (Development only).
+//       referrerPolicy: { policy: 'same-origin' },
+//       reportOnly: true
+//     }
+//   }))
 
 // Clean paths with trailing slashes
 app.use((req, res, next) => {
