@@ -7,8 +7,8 @@ const ResendSuccessSchema = z.object({
 })
 const ResendErrorSchema = z.union([
   z.object({
-    name: z.string(),
     message: z.string(),
+    name: z.string(),
     statusCode: z.number()
   }),
   z.object({

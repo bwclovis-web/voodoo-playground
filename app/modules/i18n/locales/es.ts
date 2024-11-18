@@ -11,5 +11,9 @@ export default {
     heading: "Pila de vudú",
     subTitle: "Una pila completa para Remix",
     featuresHeading: "Características"
+  },
+  logIn: {
+    heading: "Continuar con la pila RUSH",
+    subheading: "Inicia sesión en tu cuenta para continuar"
   }
 }

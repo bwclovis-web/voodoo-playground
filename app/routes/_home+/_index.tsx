@@ -75,6 +75,9 @@ export default function Index() {
             <Button type="submit" name="lng" value="fr">
               Français
             </Button>
+            <Button type="submit" name="lng" value="zh">
+              Chinese
+            </Button>
             <Button type="submit" name="lng" value="en">
               English
             </Button>

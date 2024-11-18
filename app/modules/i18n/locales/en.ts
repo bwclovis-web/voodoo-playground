@@ -11,5 +11,9 @@ export default {
     heading: "Voodoo Stack",
     subTitle: "A full featured stack for Remix",
     featuresHeading: "Features"
+  },
+  logIn: {
+    heading: "Continue to RUSH stack",
+    subheading: "Login to your account to continue"
   }
 }

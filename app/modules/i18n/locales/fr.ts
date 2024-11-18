@@ -11,5 +11,9 @@ export default {
     heading: "Pile Voodoo",
     subTitle: "Une pile complète pour Remix",
     featuresHeading: "Caractéristiques"
+  },
+  logIn: {
+    heading: "Continuer avec la pile RUSH",
+    subheading: "Connectez-vous à votre compte pour continuer"
   }
 }
