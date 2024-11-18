@@ -29,6 +29,7 @@
     "@remix-run/node": "^2.14.0",
     "@remix-run/react": "^2.14.0",
     "@remix-run/serve": "^2.14.0",
+    "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "compression": "^1.7.5",
@@ -37,12 +38,14 @@
     "gsap": "^3.12.5",
     "helmet": "^8.0.0",
     "i18next-browser-languagedetector": "^8.0.0",
+    "i18next-fetch-backend": "^6.0.0",
     "i18next-fs-backend": "^2.3.2",
     "isbot": "^4.1.0",
     "morgan": "^1.10.0",
     "pretty-cache-header": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.3.0",
     "remix-i18next": "^6.4.1",
     "vite-env-only": "^3.0.3",
     "zod": "^3.23.8"
@@ -61,6 +64,7 @@
     "@stylistic/eslint-plugin-js": "^2.10.1",
     "@stylistic/eslint-plugin-jsx": "^2.10.1",
     "@testing-library/react": "^16.0.1",
+    "@types/bcryptjs": "^2.4.6",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
@@ -87,6 +91,7 @@
     "storybook": "^8.4.4",
     "tailwind-merge": "^2.5.4",
     "tailwindcss": "^3.4.4",
+    "tsx": "^4.19.2",
     "typescript": "^5.1.6",
     "vite": "^5.1.0",
     "vite-tsconfig-paths": "^4.2.1",
@@ -94,5 +99,8 @@
   },
   "engines": {
     "node": ">=20.0.0"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }

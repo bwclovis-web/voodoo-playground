@@ -6,11 +6,11 @@ generator docs {
   provider = "node node_modules/prisma-docs-generator"
 }
 
-generator typescriptInterfaces {
-  provider    = "prisma-generator-typescript-interfaces"
-  modelType   = "type"
-  modelSuffix = "Type"
-}
+// generator typescriptInterfaces {
+//   provider    = "prisma-generator-typescript-interfaces"
+//   modelType   = "type"
+//   modelSuffix = "Type"
+// }
 
 datasource db {
   provider = "sqlite"
@@ -18,13 +18,36 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id    String @id @default(cuid())
+  email String @unique
+
+  password  Password?
+  notes     Note[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Password {
+  hash String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @unique
+}
+
+model Note {
+  id    String @id @default(cuid())
+  title String
+  body  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
 }
 
 model Feature {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   summary   String
   detail    String
   createdAt DateTime @default(now())

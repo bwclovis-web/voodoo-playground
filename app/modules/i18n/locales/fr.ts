@@ -1,6 +1,7 @@
 export default {
   global: {
-    languageSelector: "Sélectionnez une langue"
+    languageSelector: "Sélectionnez une langue",
+    login: "Connexion"
   },
   home: {
     meta: {

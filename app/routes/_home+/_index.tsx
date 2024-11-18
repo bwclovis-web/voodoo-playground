@@ -5,8 +5,9 @@ import { Form, useLoaderData } from "@remix-run/react"
 import { gsap } from "gsap"
 import { useRef } from "react"
 import { useTranslation } from "react-i18next"
+import { FaGlobe } from "react-icons/fa6"
 
-import { Button } from "~/components/Atoms/Button/Button"
+import { Button, Link } from "~/components/Atoms/Button/Button"
 import { getAllFeatures } from "~/models/feature.server"
 import i18nServer from "~/modules/i18n/i18n.server"
 interface MetaData {
@@ -32,11 +33,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 gsap.registerPlugin(useGSAP)
 export default function Index() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const container = useRef<HTMLDivElement>(null)
   const { features } = useLoaderData<typeof loader>()
-  const language = i18n.resolvedLanguage
-  console.log(`%c i18n`, 'background: #0047ab; color: #fff; padding: 2px:', language)
 
   useGSAP(
     () => {
@@ -54,10 +53,10 @@ export default function Index() {
     <div className="flex flex-col gap-8 items-center h-full bg-purple-900" ref={container}>
       <img src={banner} alt="" className="absolute object-cover w-full h-full opacity-90" />
       <section className="content opacity-0 z-4 w-2/4 mx-auto border border-pink-600 py-5 px-3 rounded-md bg-pink-200/60 backdrop-blur text-pink-900 text-center">
-        {/* <Link url="/auth/login" className="flex" intent="home">
+        <Link url="/auth/login" className="flex" intent="home">
           <FaGlobe />
-          <span className="text-lg uppercase font-semibold">{t("common.login")}</span>
-        </Link> */}
+          <span className="text-lg uppercase font-semibold">{t("global.login")}</span>
+        </Link>
         <h1 className="font-black tracking-wide text-6xl pb-3">{t("home.heading")}</h1>
         <p className="text-xl font-semibold tracking-wide mb-5">{t("home.subTitle")}</p>
         <Form className="flex justify-evenly">
@@ -87,4 +86,3 @@ export default function Index() {
     </div>
   )
 }
-

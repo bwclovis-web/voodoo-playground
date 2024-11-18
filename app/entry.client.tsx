@@ -1,8 +1,8 @@
 /* eslint-disable import/no-named-as-default-member */
 import { RemixBrowser } from "@remix-run/react"
 import i18next from "i18next"
-import Fetch from "i18next-fetch-backend"
 import I18nextBrowserLanguageDetector from "i18next-browser-languagedetector"
+import Fetch from "i18next-fetch-backend"
 import { StrictMode, startTransition } from "react"
 import { hydrateRoot } from "react-dom/client"
 import { I18nextProvider, initReactI18next } from "react-i18next"
@@ -22,7 +22,7 @@ async function main() {
         order: ["htmlTag"]
       },
       backend: {
-        loadPath: "/api/locales?lng={{lng}}&ns={{ns}}",
+        loadPath: "/api/locales?lng={{lng}}&ns={{ns}}"
       },
       fallbackLng,
       ns: getInitialNamespaces(),
