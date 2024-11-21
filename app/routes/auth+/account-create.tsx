@@ -10,18 +10,15 @@ import { json } from '@remix-run/node'
 import { Form, useLoaderData } from '@remix-run/react'
 import { useRef } from 'react'
 import { useTranslation } from "react-i18next"
-import { z } from 'zod'
 
 import { commitSession, getSession } from '~/modules/auth/auth-session.server'
 import { auth } from '~/modules/auth/auth.server'
-import { ROUTE_PATH as AUTH_VERIFY_PATH } from '~/routes/auth+/verifyCode'
+import { ROUTE_PATH as AUTH_VERIFY_PATH } from '~/routes/auth+/VerifyCode'
 import { ROUTE_PATH as DASHBOARD_PATH } from '~/routes/dashboard+/_index'
 
-export const ROUTE_PATH = '/auth/account-create' as const
+import { CreateAccountSchema } from './Forms/validationUtils'
 
-export const LoginSchema = z.object({
-  email: z.string().max(256).email('Email address is not valid.')
-})
+export const ROUTE_PATH = '/auth/account-create' as const
 
 export const meta: MetaFunction = () => [{ title: `bob - Login` }]
 
@@ -56,7 +53,7 @@ export async function action({ request }: ActionFunctionArgs) {
   })
 }
 
-export default function Login() {
+export default function AccountCreatePage() {
   const { authEmail, authError } = useLoaderData<typeof loader>()
   const inputRef = useRef<HTMLInputElement>(null)
   // const isHydrated = useHydrated()
@@ -64,9 +61,9 @@ export default function Login() {
   const { t } = useTranslation()
 
   const [emailForm, { email }] = useForm({
-    constraint: getZodConstraint(LoginSchema),
+    constraint: getZodConstraint(CreateAccountSchema),
     onValidate({ formData }) {
-      return parseWithZod(formData, { schema: LoginSchema })
+      return parseWithZod(formData, { schema: CreateAccountSchema })
     }
   })
 

@@ -1,46 +1,60 @@
+/* eslint-disable complexity */
 /* eslint-disable max-statements */
-import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node"
-import { Form, Link, useActionData, useSearchParams } from "@remix-run/react"
+import { getFormProps, getInputProps, useForm } from "@conform-to/react"
+import { getZodConstraint, parseWithZod } from "@conform-to/zod"
+import { ActionFunctionArgs, LoaderFunctionArgs, json } from "@remix-run/node"
+import { Form, Link, useActionData, useLoaderData, useSearchParams } from "@remix-run/react"
 import { useRef } from "react"
 
-import { verifyUserLogin } from "~/models/user.server"
-import { getUserId } from "~/modules/auth/auth-session.server"
+import { commitSession, getSession } from "~/modules/auth/auth-session.server"
+import { auth } from "~/modules/auth/auth.server"
+import { ROUTE_PATH as CREATE_ACCOUNT_PATH } from '~/routes/auth+/account-create'
+import { ROUTE_PATH as DASHBOARD_PATH } from "~/routes/dashboard+/_index"
+
+import { LoginSchema } from "./Forms/validationUtils"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const userId = await getUserId(request)
+  await auth.isAuthenticated(request, {
+    successRedirect: DASHBOARD_PATH
+  })
 
-  console.log(`%c userId`, 'background: #0047ab; color: #fff; padding: 2px:', userId)
+  const cookie = await getSession(request.headers.get('Cookie'))
+  const authEmail = cookie.get('auth:email')
+  const authError = cookie.get(auth.sessionErrorKey)
 
-  return {}
-
+  return json({ authEmail, authError } as const, {
+    headers: {
+      'Set-Cookie': await commitSession(cookie)
+    }
+  })
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const formData = await request.formData()
-  const email = formData.get("email") as string | null
-  const password = formData.get("password") as string | null
-
-  if (!email || !password || typeof email !== 'string' || typeof password !== 'string') {
-    return { status: 400, errors: { email: "Email is required", password: "Password is required" } }
-  }
-
-
-  const user = await verifyUserLogin(email, password)
-
-  console.log(`%c user`, 'background: #0047ab; color: #fff; padding: 2px:', user)
-  return {}
+  const url = new URL(request.url)
+  const pathname = url.pathname
+  await auth.authenticate('form', request, {
+    failureRedirect: pathname,
+    successRedirect: DASHBOARD_PATH
+  })
 }
 
 const LoginPage = () => {
+  const { authEmail, authError } = useLoaderData<typeof loader>()
   const [searchParams] = useSearchParams()
-  const redirectTo = searchParams.get("redirectTo") || "/notes"
   const actionData = useActionData<typeof action>()
   const emailRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
+
+  const [loginForm, { email, password }] = useForm({
+    constraint: getZodConstraint(LoginSchema),
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema: LoginSchema })
+    }
+  })
   return (
     <div className="flex min-h-full flex-col justify-center">
       <div className="mx-auto w-full max-w-md px-8">
-        <Form method="post" className="space-y-6">
+        <Form method="POST" className="space-y-6" {...getFormProps(loginForm)}>
           <div>
             <label
               htmlFor="email"
@@ -51,13 +65,12 @@ const LoginPage = () => {
             <div className="mt-1">
               <input
                 ref={emailRef}
-                id="email"
                 required
+                defaultValue={authEmail ? authEmail : ''}
                 // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus={true}
-                name="email"
-                type="email"
                 autoComplete="email"
+                {...getInputProps(email, { type: 'email' })}
                 aria-invalid={actionData?.errors?.email ? true : undefined}
                 aria-describedby="email-error"
                 className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
@@ -79,10 +92,8 @@ const LoginPage = () => {
             </label>
             <div className="mt-1">
               <input
-                id="password"
                 ref={passwordRef}
-                name="password"
-                type="password"
+                {...getInputProps(password, { type: 'password' })}
                 autoComplete="current-password"
                 aria-invalid={actionData?.errors?.password ? true : undefined}
                 aria-describedby="password-error"
@@ -95,8 +106,19 @@ const LoginPage = () => {
               ) : null}
             </div>
           </div>
+          <div className="flex flex-col">
+            {!authError && email.errors && (
+              <span className="mb-2 text-sm text-destructive dark:text-destructive-foreground">
+                email {email.errors.join(' ')}
+              </span>
+            )}
+            {!authEmail && authError && (
+              <span className="mb-2 text-sm text-destructive dark:text-destructive-foreground">
+                auth {authError.message}
+              </span>
+            )}
+          </div>
 
-          <input type="hidden" name="redirectTo" value={redirectTo} />
           <button
             type="submit"
             className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
@@ -123,7 +145,7 @@ const LoginPage = () => {
               <Link
                 className="text-blue-500 underline"
                 to={{
-                  pathname: "/join",
+                  pathname: CREATE_ACCOUNT_PATH,
                   search: searchParams.toString()
                 }}
               >

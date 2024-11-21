@@ -4,7 +4,6 @@ import bcrypt from "bcryptjs"
 
 import { prisma } from "~/db.server"
 
-
 export const verifyUserLogin = async (email: User["email"], password: Password["hash"]) => {
   const userWithPassword = await prisma.user.findUnique({
     include: { password: true },
@@ -12,7 +11,7 @@ export const verifyUserLogin = async (email: User["email"], password: Password["
   })
 
   if (!userWithPassword || !userWithPassword.password) {
-    return null
+    throw new Error('User not found')
   }
 
   const isPasswordValid = await bcrypt.compare(
@@ -21,7 +20,7 @@ export const verifyUserLogin = async (email: User["email"], password: Password["
   )
 
   if (!isPasswordValid) {
-    return null
+    throw new Error('Password is not Valid')
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

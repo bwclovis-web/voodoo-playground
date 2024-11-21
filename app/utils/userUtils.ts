@@ -22,7 +22,6 @@ const isUser = (user: unknown) => (
 
 export const useOptionalUser = (): User | undefined => {
   const data = useMatchesData("root")
-  console.log(`%c data`, 'background: #0047ab; color: #fff; padding: 2px:', data)
   if (!data || !isUser(data.user)) {
     return undefined
   }

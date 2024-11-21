@@ -48,7 +48,7 @@ export async function action({ request }: ActionFunctionArgs) {
   })
 }
 
-const verifyCodeForm = () => {
+const VerifyCodeForm = () => {
   const { authEmail, authError } = useLoaderData<typeof loader>()
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -127,4 +127,4 @@ const verifyCodeForm = () => {
   )
 }
 
-export default verifyCodeForm
+export default VerifyCodeForm
