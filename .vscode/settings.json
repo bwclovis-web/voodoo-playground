@@ -18,6 +18,7 @@
     "autodocs",
     "camelcase",
     "clsx",
+    "cuid",
     "gsap",
     "iife",
     "isaacs",

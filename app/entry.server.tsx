@@ -1,3 +1,4 @@
+/* eslint-disable max-params */
 import { PassThrough } from "node:stream"
 
 import type { AppLoadContext, EntryContext } from "@remix-run/node"
@@ -86,14 +87,14 @@ async function handleBotRequest(
 
           pipe(body)
         },
-        onShellError(error: unknown) {
-          reject(error)
-        },
         onError(error: unknown) {
           responseStatusCode = 500
           if (shellRendered) {
             console.error(error)
           }
+        },
+        onShellError(error: unknown) {
+          reject(error)
         }
       }
     )

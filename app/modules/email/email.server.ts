@@ -12,10 +12,10 @@ const ResendErrorSchema = z.union([
     statusCode: z.number()
   }),
   z.object({
-    name: z.literal('UnknownError'),
+    cause: z.any(),
     message: z.literal('Unknown Error'),
-    statusCode: z.literal(500),
-    cause: z.any()
+    name: z.literal('UnknownError'),
+    statusCode: z.literal(500)
   })
 ])
 

@@ -16,13 +16,13 @@ async function main() {
     .use(Fetch) // Tell i18next to use the react-i18next plugin
     .use(I18nextBrowserLanguageDetector)
     .init({
+      backend: {
+        loadPath: "/api/locales?lng={{lng}}&ns={{ns}}"
+      },
       defaultNS,
       detection: {
         caches: [],
         order: ["htmlTag"]
-      },
-      backend: {
-        loadPath: "/api/locales?lng={{lng}}&ns={{ns}}"
       },
       fallbackLng,
       ns: getInitialNamespaces(),

@@ -8,7 +8,7 @@ import { installGlobals } from '@remix-run/node'
 import compression from 'compression'
 import express from 'express'
 import { rateLimit } from 'express-rate-limit'
-import helmet from 'helmet'
+// import helmet from 'helmet'
 import morgan from 'morgan'
 
 installGlobals()
