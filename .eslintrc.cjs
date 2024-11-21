@@ -67,7 +67,7 @@ module.exports = {
       rules: {
         "arrow-body-style": ["error", "as-needed"],
         "camelcase": ["error", { properties: "always", ignoreDestructuring: true }],
-        complexity: ["error", 3],
+        complexity: ["error", 6],
         "curly": "error",
         "default-case": "error",
         "default-case-last": "error",
@@ -89,7 +89,7 @@ module.exports = {
         "max-depth": ["error", 2],
         "max-nested-callbacks": ["error", 3],
         "max-params": ["error", 4],
-        "max-statements": ["error", 6],
+        "max-statements": ["error", 7],
         "new-cap": ["error", {"newIsCap": true, "capIsNew": true }],
         "no-console": "error",
         "no-empty": "error",

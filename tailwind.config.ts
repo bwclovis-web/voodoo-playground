@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
 
 export default {
   content: ["./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}"],
@@ -13,10 +13,10 @@ export default {
           "Apple Color Emoji",
           "Segoe UI Emoji",
           "Segoe UI Symbol",
-          "Noto Color Emoji",
-        ],
-      },
-    },
+          "Noto Color Emoji"
+        ]
+      }
+    }
   },
-  plugins: [],
-} satisfies Config;
+  plugins: []
+} satisfies Config

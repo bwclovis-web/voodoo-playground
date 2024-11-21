@@ -5,15 +5,16 @@ export default {
   },
   home: {
     meta: {
-      title: "Pila de vudú",
+      title: "Pila de Rush",
       description: "¡Bienvenido a Remix!"
     },
-    heading: "Pila de vudú",
+    heading: "Pila de Rush",
     subTitle: "Una pila completa para Remix",
     featuresHeading: "Características"
   },
   logIn: {
     heading: "Continuar con la pila RUSH",
-    subheading: "Inicia sesión en tu cuenta para continuar"
+    subheading: "Inicia sesión en tu cuenta para continuar",
+    continueButton: "Continuar con la dirección de correo electrónico"
   }
 }

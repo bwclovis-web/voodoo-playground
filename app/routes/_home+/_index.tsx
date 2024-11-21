@@ -17,7 +17,7 @@ interface MetaData {
 
 import { useOptionalUser } from "~/utils/userUtils"
 
-import banner from "../../images/voodoo.webp"
+import banner from "../../images/rush.webp"
 
 export const meta: MetaFunction = ({ data }: { data: MetaData }) => [
   { title: data?.title },
@@ -34,15 +34,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
   }
 }
 
-
 gsap.registerPlugin(useGSAP)
 export default function Index() {
   const { t } = useTranslation()
   const container = useRef<HTMLDivElement>(null)
   const { features } = useLoaderData<typeof loader>()
   const user = useOptionalUser()
-
-  console.log(`%c user`, 'background: #0047ab; color: #fff; padding: 2px:', user)
 
   useGSAP(
     () => {
@@ -58,7 +55,7 @@ export default function Index() {
 
   return (
     <div className="flex flex-col gap-8 items-center h-full bg-purple-900" ref={container}>
-      <img src={banner} alt="" className="absolute object-cover w-full h-full opacity-90" />
+      <img src={banner} alt="" className="absolute object-cover w-full h-full opacity-40" />
       <section className="content opacity-0 z-4 w-2/4 mx-auto border border-pink-600 py-5 px-3 rounded-md bg-pink-200/60 backdrop-blur text-pink-900 text-center">
         <Link url="/auth/login" className="flex" intent="home">
           <FaGlobe />

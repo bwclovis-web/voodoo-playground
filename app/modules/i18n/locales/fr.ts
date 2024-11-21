@@ -5,15 +5,16 @@ export default {
   },
   home: {
     meta: {
-      title: "Pile Voodoo",
+      title: "Pile Rush",
       description: "Bienvenue sur Remix!"
     },
-    heading: "Pile Voodoo",
+    heading: "Pile Rush",
     subTitle: "Une pile complète pour Remix",
     featuresHeading: "Caractéristiques"
   },
   logIn: {
     heading: "Continuer avec la pile RUSH",
-    subheading: "Connectez-vous à votre compte pour continuer"
+    subheading: "Connectez-vous à votre compte pour continuer",
+    continueButton: "Continuer avec l'adresse e-mail"
   }
 }

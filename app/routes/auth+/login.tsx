@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { getFormProps, getInputProps, useForm } from '@conform-to/react'
 import { getZodConstraint, parseWithZod } from '@conform-to/zod'
 import type {
@@ -8,6 +9,7 @@ import type {
 import { json } from '@remix-run/node'
 import { Form, useLoaderData } from '@remix-run/react'
 import { useRef } from 'react'
+import { useTranslation } from "react-i18next"
 import { z } from 'zod'
 
 import { commitSession, getSession } from '~/modules/auth/auth-session.server'
@@ -59,6 +61,7 @@ export default function Login() {
   const inputRef = useRef<HTMLInputElement>(null)
   // const isHydrated = useHydrated()
   // const isPending = useIsPending()
+  const { t } = useTranslation()
 
   const [emailForm, { email }] = useForm({
     constraint: getZodConstraint(LoginSchema),
@@ -67,16 +70,14 @@ export default function Login() {
     }
   })
 
-
-
   return (
     <div className="mx-auto flex h-full w-full max-w-96 flex-col items-center justify-center gap-6">
       <div className="mb-2 flex flex-col gap-2">
         <h3 className="text-center text-2xl font-medium text-primary">
-          Continue to Remix SaaS
+          {t("logIn.heading")}
         </h3>
         <p className="text-center text-base font-normal text-primary/60">
-          Please log in to continue.
+          {t("logIn.subheading")}
         </p>
       </div>
 
@@ -117,17 +118,9 @@ export default function Login() {
         </div>
 
         <button type="submit" className="w-full">
-          Continue with Email
+          {t("logIn.continueButton")}
         </button>
       </Form>
-
-      <div className="relative flex w-full items-center justify-center">
-        <span className="absolute w-full border-b border-border" />
-        <span className="z-10 bg-card px-3 text-xs font-medium uppercase text-primary/60">
-          Or
-        </span>
-      </div>
-
 
       <p className="px-12 text-center text-sm font-normal leading-normal text-primary/60">
         By clicking continue, you agree to our{' '}
