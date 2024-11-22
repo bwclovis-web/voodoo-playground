@@ -11,6 +11,7 @@ import { Form, useLoaderData } from '@remix-run/react'
 import { useRef } from 'react'
 import { useTranslation } from "react-i18next"
 
+import Input from '~/components/Atoms/Input/Input'
 import { commitSession, getSession } from '~/modules/auth/auth-session.server'
 import { auth } from '~/modules/auth/auth.server'
 import { ROUTE_PATH as AUTH_VERIFY_PATH } from '~/routes/auth+/VerifyCode'
@@ -86,20 +87,7 @@ export default function AccountCreatePage() {
         {/* Security */}
         {/* <AuthenticityTokenInput />
         <HoneypotInputs /> */}
-
-        <div className="flex w-full flex-col gap-1.5">
-          <label htmlFor="email" className="sr-only">
-            Email
-          </label>
-          <input
-            placeholder="Email"
-            ref={inputRef}
-            defaultValue={authEmail ? authEmail : ''}
-            className={`bg-transparent ${email.errors && 'border-destructive focus-visible:ring-destructive'
-              }`}
-            {...getInputProps(email, { type: 'email' })}
-          />
-        </div>
+        <Input inputType="email" ref={inputRef} defaultValue={authEmail} action={email} />
 
         <div className="flex flex-col">
           {!authError && email.errors && (

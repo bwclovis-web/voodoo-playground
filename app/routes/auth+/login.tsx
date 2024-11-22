@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import { getFormProps, useForm } from "@conform-to/react"
 import { getZodConstraint, parseWithZod } from "@conform-to/zod"
-import { ActionFunctionArgs, LoaderFunctionArgs, json } from "@remix-run/node"
+import { ActionFunctionArgs, LoaderFunctionArgs, data } from "@remix-run/node"
 import { Form, Link, useActionData, useLoaderData, useSearchParams } from "@remix-run/react"
 import { useRef } from "react"
 import { useTranslation } from "react-i18next"
@@ -23,7 +23,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const authEmail = cookie.get('auth:email')
   const authError = cookie.get(auth.sessionErrorKey)
 
-  return json({ authEmail, authError } as const, {
+  return data({ authEmail, authError } as const, {
     headers: {
       'Set-Cookie': await commitSession(cookie)
     }
