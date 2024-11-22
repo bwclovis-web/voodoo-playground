@@ -1,11 +1,12 @@
-/* eslint-disable complexity */
 /* eslint-disable max-statements */
-import { getFormProps, getInputProps, useForm } from "@conform-to/react"
+import { getFormProps, useForm } from "@conform-to/react"
 import { getZodConstraint, parseWithZod } from "@conform-to/zod"
 import { ActionFunctionArgs, LoaderFunctionArgs, json } from "@remix-run/node"
 import { Form, Link, useActionData, useLoaderData, useSearchParams } from "@remix-run/react"
 import { useRef } from "react"
+import { useTranslation } from "react-i18next"
 
+import Input from "~/components/Atoms/Input/Input"
 import { commitSession, getSession } from "~/modules/auth/auth-session.server"
 import { auth } from "~/modules/auth/auth.server"
 import { ROUTE_PATH as CREATE_ACCOUNT_PATH } from '~/routes/auth+/account-create'
@@ -41,9 +42,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 const LoginPage = () => {
   const { authEmail, authError } = useLoaderData<typeof loader>()
   const [searchParams] = useSearchParams()
-  const actionData = useActionData<typeof action>()
+  const actionData = useActionData<{ errors?: { [key: string]: string } }>()
   const emailRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
+  const { t } = useTranslation()
 
   const [loginForm, { email, password }] = useForm({
     constraint: getZodConstraint(LoginSchema),
@@ -54,58 +56,22 @@ const LoginPage = () => {
   return (
     <div className="flex min-h-full flex-col justify-center">
       <div className="mx-auto w-full max-w-md px-8">
+        <h2 className="font-bold text-2xl mb-4 text-slate-700">{t("logIn.heading")}</h2>
+        <p className="pb-4 leading-5 text-base text-slate-500">{t("logIn.subheading")}</p>
         <Form method="POST" className="space-y-6" {...getFormProps(loginForm)}>
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email address
-            </label>
-            <div className="mt-1">
-              <input
-                ref={emailRef}
-                required
-                defaultValue={authEmail ? authEmail : ''}
-                // eslint-disable-next-line jsx-a11y/no-autofocus
-                autoFocus={true}
-                autoComplete="email"
-                {...getInputProps(email, { type: 'email' })}
-                aria-invalid={actionData?.errors?.email ? true : undefined}
-                aria-describedby="email-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-              />
-              {actionData?.errors?.email ? (
-                <div className="pt-1 text-red-700" id="email-error">
-                  {actionData.errors.email}
-                </div>
-              ) : null}
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
-            <div className="mt-1">
-              <input
-                ref={passwordRef}
-                {...getInputProps(password, { type: 'password' })}
-                autoComplete="current-password"
-                aria-invalid={actionData?.errors?.password ? true : undefined}
-                aria-describedby="password-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-              />
-              {actionData?.errors?.password ? (
-                <div className="pt-1 text-red-700" id="password-error">
-                  {actionData.errors.password}
-                </div>
-              ) : null}
-            </div>
-          </div>
+          <Input
+            inputType="email"
+            ref={emailRef}
+            defaultValue={authEmail}
+            actionData={actionData}
+            action={email}
+          />
+          <Input
+            inputType="password"
+            ref={passwordRef}
+            actionData={actionData}
+            action={password}
+          />
           <div className="flex flex-col">
             {!authError && email.errors && (
               <span className="mb-2 text-sm text-destructive dark:text-destructive-foreground">
@@ -123,7 +89,7 @@ const LoginPage = () => {
             type="submit"
             className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
           >
-            Log in
+            {t("global.login")}
           </button>
           <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -141,7 +107,7 @@ const LoginPage = () => {
               </label>
             </div>
             <div className="text-center text-sm text-gray-500">
-              Don&apos;t have an account?{" "}
+              <span>{t("logIn.noAccountText")} </span>
               <Link
                 className="text-blue-500 underline"
                 to={{
@@ -149,7 +115,7 @@ const LoginPage = () => {
                   search: searchParams.toString()
                 }}
               >
-                Sign up
+                {t("global.signUp")}
               </Link>
             </div>
           </div>

@@ -1,20 +1,30 @@
 export default {
+  createAccount: {
+    continueButton: "Continuer avec l'adresse e-mail",
+    heading: "Continuer avec la pile RUSH",
+    subheading: "Connectez-vous à votre compte pour continuer"
+  },
   global: {
+    formLabels: {
+      email: "Adresse e-mail",
+      password: "Mot de passe"
+    },
     languageSelector: "Sélectionnez une langue",
-    login: "Connexion"
+    login: "Connexion",
+    signUp: "S'inscrire"
   },
   home: {
-    meta: {
-      title: "Pile Rush",
-      description: "Bienvenue sur Remix!"
-    },
+    featuresHeading: "Caractéristiques",
     heading: "Pile Rush",
-    subTitle: "Une pile complète pour Remix",
-    featuresHeading: "Caractéristiques"
+    meta: {
+      description: "Bienvenue sur Remix!",
+      title: "Pile Rush"
+    },
+    subTitle: "Une pile complète pour Remix"
   },
   logIn: {
-    heading: "Continuer avec la pile RUSH",
-    subheading: "Connectez-vous à votre compte pour continuer",
-    continueButton: "Continuer avec l'adresse e-mail"
+    heading: "Connectez-vous à votre compte",
+    noAccountText: "Vous n'avez pas de compte?",
+    subheading: "Entrez votre adresse e-mail et votre mot de passe pour vous connecter"
   }
 }

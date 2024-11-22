@@ -70,11 +70,11 @@ export default function AccountCreatePage() {
   return (
     <div className="mx-auto flex h-full w-full max-w-96 flex-col items-center justify-center gap-6">
       <div className="mb-2 flex flex-col gap-2">
-        <h3 className="text-center text-2xl font-medium text-primary">
-          {t("logIn.heading")}
-        </h3>
+        <h2 className="text-center text-2xl font-medium text-primary">
+          {t("createAccount.heading")}
+        </h2>
         <p className="text-center text-base font-normal text-primary/60">
-          {t("logIn.subheading")}
+          {t("createAccount.subheading")}
         </p>
       </div>
 
@@ -115,7 +115,7 @@ export default function AccountCreatePage() {
         </div>
 
         <button type="submit" className="w-full">
-          {t("logIn.continueButton")}
+          {t("createAccount.continueButton")}
         </button>
       </Form>
 
