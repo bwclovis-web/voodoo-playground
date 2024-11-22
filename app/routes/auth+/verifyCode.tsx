@@ -1,6 +1,6 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react"
 import { getZodConstraint, parseWithZod } from "@conform-to/zod"
-import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node"
+import { ActionFunctionArgs, LoaderFunctionArgs, data } from "@remix-run/node"
 import { Form, redirect, useLoaderData } from "@remix-run/react"
 import { useRef } from "react"
 import { z } from "zod"
@@ -26,11 +26,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
     return redirect('/auth/login')
   }
 
-  return { authEmail, authError } as const, {
+  return data({ authEmail, authError } as const, {
     headers: {
       'Set-Cookie': await commitSession(cookie)
     }
-  }
+  })
 }
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -43,8 +43,8 @@ export async function action({ request }: ActionFunctionArgs) {
   // checkHoneypot(formData)
 
   await auth.authenticate('TOTP', request, {
-    successRedirect: pathname,
-    failureRedirect: pathname
+    failureRedirect: pathname,
+    successRedirect: pathname
   })
 }
 

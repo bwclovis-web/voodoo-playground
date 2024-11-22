@@ -69,12 +69,12 @@ export default function AccountCreatePage() {
   })
 
   return (
-    <div className="mx-auto flex h-full w-full max-w-96 flex-col items-center justify-center gap-6">
-      <div className="mb-2 flex flex-col gap-2">
-        <h2 className="text-center text-2xl font-medium text-primary">
+    <div className="mx-auto flex h-full w-full max-w-96 flex-col justify-center">
+      <div className="mb-2">
+        <h2>
           {t("createAccount.heading")}
         </h2>
-        <p className="text-center text-base font-normal text-primary/60">
+        <p className="pb-4 text-slate-500">
           {t("createAccount.subheading")}
         </p>
       </div>
@@ -82,7 +82,7 @@ export default function AccountCreatePage() {
       <Form
         method="POST"
         autoComplete="off"
-        className="flex w-full flex-col items-start gap-1"
+        className="flex w-full flex-col items-start gap-1 mb-4"
         {...getFormProps(emailForm)}>
         {/* Security */}
         {/* <AuthenticityTokenInput />

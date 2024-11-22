@@ -1,8 +1,7 @@
 import type { LoaderFunctionArgs } from '@remix-run/node'
-import { json, redirect } from '@remix-run/node'
+import { redirect } from '@remix-run/node'
 import { Link, Outlet } from '@remix-run/react'
 
-// import { Logo } from '#app/components/logo'
 import { auth } from '~/modules/auth/auth.server'
 import { ROUTE_PATH as HOME_PATH } from '~/routes/_home+/_layout'
 import { ROUTE_PATH as LOGIN_PATH } from '~/routes/auth+/account-create'

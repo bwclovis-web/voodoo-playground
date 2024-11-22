@@ -126,6 +126,15 @@ async function handleBrowserRequest(
         </I18nextProvider>
       </NonceProvider>,
       {
+        onError(error: unknown) {
+          responseStatusCode = 500
+          if (shellRendered) {
+            console.error(error)
+          }
+        },
+        onShellError(error: unknown) {
+          reject(error)
+        },
         onShellReady() {
           shellRendered = true
           const body = new PassThrough()
@@ -139,15 +148,6 @@ async function handleBrowserRequest(
           }))
 
           pipe(body)
-        },
-        onShellError(error: unknown) {
-          reject(error)
-        },
-        onError(error: unknown) {
-          responseStatusCode = 500
-          if (shellRendered) {
-            console.error(error)
-          }
         }
       }
     )

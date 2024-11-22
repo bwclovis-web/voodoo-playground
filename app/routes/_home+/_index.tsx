@@ -19,10 +19,14 @@ import { useOptionalUser } from "~/utils/userUtils"
 
 import banner from "../../images/rush.webp"
 
-export const meta: MetaFunction = ({ data }: { data: MetaData }) => [
-  { title: data?.title },
-  { content: data?.description, name: "description" }
-]
+export const meta: MetaFunction = ({ data }: { data: unknown }) => {
+  const metaData = data as MetaData
+  return [
+    { title: metaData?.title },
+    { content: metaData?.description, name: "description" }
+  ]
+}
+
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const t = await i18nServer.getFixedT(request)

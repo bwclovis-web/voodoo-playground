@@ -56,8 +56,8 @@ const LoginPage = () => {
   return (
     <div className="flex min-h-full flex-col justify-center">
       <div className="mx-auto w-full max-w-md px-8">
-        <h2 className="font-bold text-2xl mb-4 text-slate-700">{t("logIn.heading")}</h2>
-        <p className="pb-4 leading-5 text-base text-slate-500">{t("logIn.subheading")}</p>
+        <h2>{t("logIn.heading")}</h2>
+        <p className="pb-4 text-slate-500">{t("logIn.subheading")}</p>
         <Form method="POST" className="space-y-6" {...getFormProps(loginForm)}>
           <Input
             inputType="email"
