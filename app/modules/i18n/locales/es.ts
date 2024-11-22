@@ -2,7 +2,7 @@ export default {
   createAccount: {
     continueButton: "Continuar con la dirección de correo electrónico",
     heading: "Continuar con la pila RUSH",
-    subheading: "Inicia sesión en tu cuenta para continuar"
+    subheading: "Ingresa tu dirección de correo electrónico. Te enviaremos un enlace y una contraseña de un solo uso para iniciar sesión. Luego serás dirigido a donde puedes restablecer tu contraseña."
   },
   global: {
     formLabels: {

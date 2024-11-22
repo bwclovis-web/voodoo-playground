@@ -6,7 +6,7 @@ import { auth } from '~/modules/auth/auth.server'
 import { ROUTE_PATH as HOME_PATH } from '~/routes/_home+/_layout'
 import { ROUTE_PATH as LOGIN_PATH } from '~/routes/auth+/account-create'
 import { ROUTE_PATH as DASHBOARD_PATH } from '~/routes/dashboard+/_index'
-import { getDomainPathname } from '~/utils/utility.server'
+import { getDomainPathname } from '~/utils/server/utility.server'
 
 export const ROUTE_PATH = '/auth' as const
 

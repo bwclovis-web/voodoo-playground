@@ -2,7 +2,7 @@ export default {
   createAccount: {
     continueButton: "繼續使用電子郵件地址",
     heading: "繼續使用 RUSH 堆棧",
-    subheading: "登錄您的帳戶以繼續"
+    subheading: "請輸入您的電子郵件地址。我們將向您發送一個鏈接和一次性密碼以登錄。然後，您將被引導到可以重置密碼的地方。"
   },
   global: {
     formLabels: {

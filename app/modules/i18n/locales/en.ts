@@ -2,7 +2,7 @@ export default {
   createAccount: {
     continueButton: "Continue with email address",
     heading: "Continue to RUSH stack",
-    subheading: "Login to your account to continue"
+    subheading: "Please enter your email address. We will send you a link and one time password to log in with. You will then be directed to where you can reset your password."
   },
   global: {
     formLabels: {

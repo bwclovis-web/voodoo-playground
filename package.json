@@ -38,6 +38,7 @@
     "clsx": "^2.1.1",
     "compression": "^1.7.5",
     "cross-env": "^7.0.3",
+    "crypto-js": "^4.2.0",
     "express-rate-limit": "^7.4.1",
     "gsap": "^3.12.5",
     "helmet": "^8.0.0",
@@ -54,6 +55,7 @@
     "remix-auth-form": "^1.5.0",
     "remix-auth-totp": "^3.4.2",
     "remix-i18next": "^6.4.1",
+    "remix-utils": "^7.7.0",
     "vite-env-only": "^3.0.3",
     "zod": "^3.23.8"
   },

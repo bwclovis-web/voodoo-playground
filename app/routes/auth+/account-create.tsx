@@ -1,21 +1,23 @@
 /* eslint-disable complexity */
-import { getFormProps, getInputProps, useForm } from '@conform-to/react'
+import { getFormProps, useForm } from '@conform-to/react'
 import { getZodConstraint, parseWithZod } from '@conform-to/zod'
 import type {
   ActionFunctionArgs,
   LoaderFunctionArgs,
   MetaFunction
 } from '@remix-run/node'
-import { json } from '@remix-run/node'
+import { data } from '@remix-run/node'
 import { Form, useLoaderData } from '@remix-run/react'
 import { useRef } from 'react'
 import { useTranslation } from "react-i18next"
+import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
 
 import Input from '~/components/Atoms/Input/Input'
 import { commitSession, getSession } from '~/modules/auth/auth-session.server'
 import { auth } from '~/modules/auth/auth.server'
 import { ROUTE_PATH as AUTH_VERIFY_PATH } from '~/routes/auth+/VerifyCode'
 import { ROUTE_PATH as DASHBOARD_PATH } from '~/routes/dashboard+/_index'
+import { validateCSRF } from '~/utils/server/csrf.server'
 
 import { CreateAccountSchema } from './Forms/validationUtils'
 
@@ -32,7 +34,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const authEmail = cookie.get('auth:email')
   const authError = cookie.get(auth.sessionErrorKey)
 
-  return json({ authEmail, authError } as const, {
+  return data({ authEmail, authError } as const, {
     headers: {
       'Set-Cookie': await commitSession(cookie)
     }
@@ -45,7 +47,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
   const clonedRequest = request.clone()
   const formData = await clonedRequest.formData()
-  // await validateCSRF(formData, clonedRequest.headers)
+  await validateCSRF(formData, clonedRequest.headers)
   // checkHoneypot(formData)
 
   await auth.authenticate('TOTP', request, {
@@ -74,7 +76,7 @@ export default function AccountCreatePage() {
         <h2>
           {t("createAccount.heading")}
         </h2>
-        <p className="pb-4 text-slate-500">
+        <p className="pb-4 text-slate-500 text-sm">
           {t("createAccount.subheading")}
         </p>
       </div>
@@ -84,8 +86,9 @@ export default function AccountCreatePage() {
         autoComplete="off"
         className="flex w-full flex-col items-start gap-1 mb-4"
         {...getFormProps(emailForm)}>
+        <AuthenticityTokenInput />
         {/* Security */}
-        {/* <AuthenticityTokenInput />
+        {/*
         <HoneypotInputs /> */}
         <Input inputType="email" ref={inputRef} defaultValue={authEmail} action={email} />
 

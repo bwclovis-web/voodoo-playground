@@ -12,7 +12,7 @@ import { I18nextProvider, initReactI18next } from "react-i18next"
 import { NonceProvider } from '~/hooks/use-nonce'
 import * as i18n from "~/modules/i18n/i18n"
 import i18nServer from "~/modules/i18n/i18n.server"
-import { initEnvs } from '~/utils/utility.server'
+import { initEnvs } from '~/utils/server/utility.server'
 
 initEnvs()
 

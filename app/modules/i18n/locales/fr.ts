@@ -2,7 +2,7 @@ export default {
   createAccount: {
     continueButton: "Continuer avec l'adresse e-mail",
     heading: "Continuer avec la pile RUSH",
-    subheading: "Connectez-vous à votre compte pour continuer"
+    subheading: "Veuillez saisir votre adresse e-mail. Nous vous enverrons un lien et un mot de passe à usage unique pour vous connecter. Vous serez ensuite dirigé vers l'endroit où vous pourrez réinitialiser votre mot de passe."
   },
   global: {
     formLabels: {
