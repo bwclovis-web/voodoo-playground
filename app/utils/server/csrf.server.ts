@@ -12,9 +12,7 @@ const csfrCookie = createCookie(CSRF_COOKIE_KEY, {
 })
 
 export const csrf = new CSRF({
-  cookie: csfrCookie,
-  formDataKey: CSRF_COOKIE_KEY,
-  secret: process.env.SESSION_SECRET
+  cookie: csfrCookie
 })
 
 export async function validateCSRF(formData: FormData, headers: Headers) {

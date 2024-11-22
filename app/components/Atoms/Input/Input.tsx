@@ -10,6 +10,7 @@ import { inputVariants } from "./input-variants"
 interface InputProps extends Omit<HTMLProps<HTMLInputElement>, 'action'>,
   VariantProps<typeof inputVariants> {
   inputType: 'email' | 'password' | 'text'
+  inputRef: React.RefObject<HTMLInputElement>
   action: FieldMetadata<unknown>
   actionData?: {
     errors?: { [key: string]: string }
@@ -19,7 +20,7 @@ interface InputProps extends Omit<HTMLProps<HTMLInputElement>, 'action'>,
 const Input: FC<InputProps> = ({
   inputType,
   className,
-  ref,
+  inputRef,
   defaultValue,
   actionData,
   action,
@@ -42,7 +43,7 @@ const Input: FC<InputProps> = ({
       </label>
       <div className="mt-1">
         <input
-          ref={ref}
+          ref={inputRef}
           required
           defaultValue={defaultValue ? defaultValue : ''}
           aria-invalid={actionData?.errors?.action ? true : undefined}

@@ -5,12 +5,16 @@ import { ActionFunctionArgs, LoaderFunctionArgs, data } from "@remix-run/node"
 import { Form, Link, useActionData, useLoaderData, useSearchParams } from "@remix-run/react"
 import { useRef } from "react"
 import { useTranslation } from "react-i18next"
+import { AuthenticityTokenInput } from "remix-utils/csrf/react"
+import { HoneypotInputs } from "remix-utils/honeypot/react"
 
 import Input from "~/components/Atoms/Input/Input"
 import { commitSession, getSession } from "~/modules/auth/auth-session.server"
 import { auth } from "~/modules/auth/auth.server"
 import { ROUTE_PATH as CREATE_ACCOUNT_PATH } from '~/routes/auth+/account-create'
 import { ROUTE_PATH as DASHBOARD_PATH } from "~/routes/dashboard+/_index"
+import { validateCSRF } from "~/utils/server/csrf.server"
+import { checkHoneypot } from "~/utils/server/honeypot.server"
 
 import { LoginSchema } from "./Forms/validationUtils"
 
@@ -33,6 +37,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const action = async ({ request }: ActionFunctionArgs) => {
   const url = new URL(request.url)
   const pathname = url.pathname
+  const clonedRequest = request.clone()
+  const formData = await clonedRequest.formData()
+  await validateCSRF(formData, request.headers)
+  checkHoneypot(formData)
   await auth.authenticate('form', request, {
     failureRedirect: pathname,
     successRedirect: DASHBOARD_PATH
@@ -59,16 +67,19 @@ const LoginPage = () => {
         <h2>{t("logIn.heading")}</h2>
         <p className="pb-4 text-slate-500">{t("logIn.subheading")}</p>
         <Form method="POST" className="space-y-6" {...getFormProps(loginForm)}>
+          {/* SECURITY */}
+          <AuthenticityTokenInput />
+          <HoneypotInputs />
           <Input
             inputType="email"
-            ref={emailRef}
+            inputRef={emailRef}
             defaultValue={authEmail}
             actionData={actionData}
             action={email}
           />
           <Input
             inputType="password"
-            ref={passwordRef}
+            inputRef={passwordRef}
             actionData={actionData}
             action={password}
           />
@@ -124,6 +135,5 @@ const LoginPage = () => {
     </div>
   )
 }
-
 
 export default LoginPage

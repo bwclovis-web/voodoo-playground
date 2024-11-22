@@ -11,6 +11,7 @@ import { Form, useLoaderData } from '@remix-run/react'
 import { useRef } from 'react'
 import { useTranslation } from "react-i18next"
 import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
+import { HoneypotInputs } from 'remix-utils/honeypot/react'
 
 import Input from '~/components/Atoms/Input/Input'
 import { commitSession, getSession } from '~/modules/auth/auth-session.server'
@@ -18,6 +19,8 @@ import { auth } from '~/modules/auth/auth.server'
 import { ROUTE_PATH as AUTH_VERIFY_PATH } from '~/routes/auth+/VerifyCode'
 import { ROUTE_PATH as DASHBOARD_PATH } from '~/routes/dashboard+/_index'
 import { validateCSRF } from '~/utils/server/csrf.server'
+import { checkHoneypot } from '~/utils/server/honeypot.server'
+
 
 import { CreateAccountSchema } from './Forms/validationUtils'
 
@@ -48,7 +51,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const clonedRequest = request.clone()
   const formData = await clonedRequest.formData()
   await validateCSRF(formData, clonedRequest.headers)
-  // checkHoneypot(formData)
+  checkHoneypot(formData)
 
   await auth.authenticate('TOTP', request, {
     failureRedirect: pathname,
@@ -87,10 +90,10 @@ export default function AccountCreatePage() {
         className="flex w-full flex-col items-start gap-1 mb-4"
         {...getFormProps(emailForm)}>
         <AuthenticityTokenInput />
+        <HoneypotInputs />
         {/* Security */}
-        {/*
-        <HoneypotInputs /> */}
-        <Input inputType="email" ref={inputRef} defaultValue={authEmail} action={email} />
+
+        <Input inputType="email" inputRef={inputRef} defaultValue={authEmail} action={email} />
 
         <div className="flex flex-col">
           {!authError && email.errors && (
