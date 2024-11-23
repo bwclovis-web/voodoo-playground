@@ -10,6 +10,7 @@ import { inputVariants } from "./input-variants"
 interface InputProps extends Omit<HTMLProps<HTMLInputElement>, 'action'>,
   VariantProps<typeof inputVariants> {
   inputType: 'email' | 'password' | 'text'
+  inputId?: string,
   inputRef: React.RefObject<HTMLInputElement>
   action: FieldMetadata<unknown>
   actionData?: {
@@ -19,6 +20,7 @@ interface InputProps extends Omit<HTMLProps<HTMLInputElement>, 'action'>,
 
 const Input: FC<InputProps> = ({
   inputType,
+  inputId = inputType,
   className,
   inputRef,
   defaultValue,
@@ -36,7 +38,7 @@ const Input: FC<InputProps> = ({
       {...props}
     >
       <label
-        htmlFor={inputType}
+        htmlFor={inputId}
         className="block text-sm font-medium text-gray-700"
       >
         {t(`global.formLabels.${inputType}`)}
@@ -47,12 +49,12 @@ const Input: FC<InputProps> = ({
           required
           defaultValue={defaultValue ? defaultValue : ''}
           aria-invalid={actionData?.errors?.action ? true : undefined}
-          aria-describedby={`${inputType}-error`}
+          aria-describedby={`${inputId}-error`}
           className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
           {...getInputProps(action, { ariaAttributes: true, type: inputType })}
         />
         {action.errors && (
-          <span className="mb-2 text-sm text-destructive dark:text-destructive-foreground text-red-600 uppercase font-medium" id={`${inputType}-error`}>
+          <span className="mb-2 text-sm text-destructive dark:text-destructive-foreground text-red-600 uppercase font-medium" id={`${inputId}-error`}>
             {action.errors.join(' ')}
           </span>
         )}

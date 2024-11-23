@@ -90,14 +90,12 @@ const LoginPage = () => {
             defaultValue={authEmail}
             actionData={actionData}
             action={email}
-            inputName="email"
           />
           <Input
             inputType="password"
             inputRef={passwordRef}
             actionData={actionData}
             action={password}
-            inputName="password"
           />
           <div className="flex flex-col">
             {!authEmail && authError && (
