@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import { getFormProps, useForm } from "@conform-to/react"
 import { getZodConstraint, parseWithZod } from "@conform-to/zod"
-import { ActionFunctionArgs, LoaderFunctionArgs, data } from "@remix-run/node"
+import { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction, data } from "@remix-run/node"
 import { Form, Link, useActionData, useLoaderData, useSearchParams } from "@remix-run/react"
 import { useRef } from "react"
 import { useTranslation } from "react-i18next"
@@ -9,8 +9,10 @@ import { AuthenticityTokenInput } from "remix-utils/csrf/react"
 import { HoneypotInputs } from "remix-utils/honeypot/react"
 
 import Input from "~/components/Atoms/Input/Input"
+import metaUtil, { MetaData } from "~/components/Utility/metaUtil"
 import { commitSession, getSession } from "~/modules/auth/auth-session.server"
 import { auth } from "~/modules/auth/auth.server"
+import i18nServer from "~/modules/i18n/i18n.server"
 import { ROUTE_PATH as CREATE_ACCOUNT_PATH } from '~/routes/auth+/account-create'
 import { ROUTE_PATH as DASHBOARD_PATH } from "~/routes/dashboard+/_index"
 import { validateCSRF } from "~/utils/server/csrf.server"
@@ -18,7 +20,14 @@ import { checkHoneypot } from "~/utils/server/honeypot.server"
 
 import { LoginSchema } from "./Forms/validationUtils"
 
+export const ROUTE_PATH = '/auth/login' as const
+
+export const meta: MetaFunction = ({ data }) => (
+  metaUtil(data as MetaData)
+)
+
 export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const t = await i18nServer.getFixedT(request)
   await auth.isAuthenticated(request, {
     successRedirect: DASHBOARD_PATH
   })
@@ -27,7 +36,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const authEmail = cookie.get('auth:email')
   const authError = cookie.get(auth.sessionErrorKey)
 
-  return data({ authEmail, authError } as const, {
+  return data({
+    authEmail,
+    authError,
+    description: t("logIn.meta.description"),
+    title: t("logIn.meta.title")
+  } as const, {
     headers: {
       'Set-Cookie': await commitSession(cookie)
     }
@@ -76,19 +90,16 @@ const LoginPage = () => {
             defaultValue={authEmail}
             actionData={actionData}
             action={email}
+            inputName="email"
           />
           <Input
             inputType="password"
             inputRef={passwordRef}
             actionData={actionData}
             action={password}
+            inputName="password"
           />
           <div className="flex flex-col">
-            {!authError && email.errors && (
-              <span className="mb-2 text-sm text-destructive dark:text-destructive-foreground">
-                email {email.errors.join(' ')}
-              </span>
-            )}
             {!authEmail && authError && (
               <span className="mb-2 text-sm text-destructive dark:text-destructive-foreground">
                 auth {authError.message}

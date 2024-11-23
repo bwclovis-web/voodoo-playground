@@ -13,7 +13,7 @@ import morgan from 'morgan'
 
 installGlobals()
 const METRICS_PORT = process.env.METRICS_PORT || 3030
-const PORT = process.env.APP_PORT || 5150
+const PORT = process.env.APP_PORT || 2112
 const NODE_ENV = process.env.NODE_ENV ?? 'development'
 const MAX_LIMIT_MULTIPLE = NODE_ENV !== 'production' ? 10_000 : 1
 

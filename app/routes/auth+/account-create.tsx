@@ -14,8 +14,10 @@ import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
 import { HoneypotInputs } from 'remix-utils/honeypot/react'
 
 import Input from '~/components/Atoms/Input/Input'
+import metaUtil, { MetaData } from '~/components/Utility/metaUtil'
 import { commitSession, getSession } from '~/modules/auth/auth-session.server'
 import { auth } from '~/modules/auth/auth.server'
+import i18nServer from '~/modules/i18n/i18n.server'
 import { ROUTE_PATH as AUTH_VERIFY_PATH } from '~/routes/auth+/VerifyCode'
 import { ROUTE_PATH as DASHBOARD_PATH } from '~/routes/dashboard+/_index'
 import { validateCSRF } from '~/utils/server/csrf.server'
@@ -26,9 +28,13 @@ import { CreateAccountSchema } from './Forms/validationUtils'
 
 export const ROUTE_PATH = '/auth/account-create' as const
 
-export const meta: MetaFunction = () => [{ title: `bob - Login` }]
+
+export const meta: MetaFunction = ({ data }) => (
+  metaUtil(data as MetaData)
+)
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  const t = await i18nServer.getFixedT(request)
   await auth.isAuthenticated(request, {
     successRedirect: DASHBOARD_PATH
   })
@@ -37,11 +43,19 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const authEmail = cookie.get('auth:email')
   const authError = cookie.get(auth.sessionErrorKey)
 
-  return data({ authEmail, authError } as const, {
-    headers: {
-      'Set-Cookie': await commitSession(cookie)
+  return data(
+    {
+      authEmail,
+      authError,
+      description: t("createAccount.meta.description"),
+      title: t("createAccount.meta.title")
+    } as const,
+    {
+      headers: {
+        'Set-Cookie': await commitSession(cookie)
+      }
     }
-  })
+  )
 }
 
 export async function action({ request }: ActionFunctionArgs) {

@@ -51,11 +51,11 @@ const Input: FC<InputProps> = ({
           className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
           {...getInputProps(action, { ariaAttributes: true, type: inputType })}
         />
-        {actionData?.errors?.action ? (
-          <div className="pt-1 text-red-700" id={`${inputType}-error`}>
-            {actionData.errors.action}
-          </div>
-        ) : null}
+        {action.errors && (
+          <span className="mb-2 text-sm text-destructive dark:text-destructive-foreground text-red-600 uppercase font-medium" id={`${inputType}-error`}>
+            {action.errors.join(' ')}
+          </span>
+        )}
       </div>
     </div>
   )

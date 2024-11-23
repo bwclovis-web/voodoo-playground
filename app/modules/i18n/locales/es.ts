@@ -1,7 +1,13 @@
+import meta from "stories/Button.stories"
+
 export default {
   createAccount: {
     continueButton: "Continuar con la dirección de correo electrónico",
     heading: "Continuar con la pila RUSH",
+    meta: {
+      description: "Restablece tu contraseña para la pila RUSH",
+      title: "Restablecer contraseña"
+    },
     subheading: "Ingresa tu dirección de correo electrónico. Te enviaremos un enlace y una contraseña de un solo uso para iniciar sesión. Luego serás dirigido a donde puedes restablecer tu contraseña."
   },
   global: {
@@ -24,6 +30,10 @@ export default {
   },
   logIn: {
     heading: "Inicia sesión en tu cuenta",
+    meta: {
+      description: "Inicia sesión en tu cuenta",
+      title: "Iniciar sesión"
+    },
     noAccountText: "¿No tienes una cuenta?",
     subheading: "Ingresa tu dirección de correo electrónico y contraseña para iniciar sesión"
   }

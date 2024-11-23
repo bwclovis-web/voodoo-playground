@@ -8,25 +8,16 @@ import { useTranslation } from "react-i18next"
 import { FaGlobe } from "react-icons/fa6"
 
 import { Button, Link } from "~/components/Atoms/Button/Button"
+import metaUtil, { MetaData } from "~/components/Utility/metaUtil"
 import { getAllFeatures } from "~/models/feature.server"
 import i18nServer from "~/modules/i18n/i18n.server"
-interface MetaData {
-  title: string;
-  description: string;
-}
-
 import { useOptionalUser } from "~/utils/userUtils"
 
 import banner from "../../images/rush.webp"
 
-export const meta: MetaFunction = ({ data }: { data: unknown }) => {
-  const metaData = data as MetaData
-  return [
-    { title: metaData?.title },
-    { content: metaData?.description, name: "description" }
-  ]
-}
-
+export const meta: MetaFunction = ({ data }) => (
+  metaUtil(data as MetaData)
+)
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const t = await i18nServer.getFixedT(request)
