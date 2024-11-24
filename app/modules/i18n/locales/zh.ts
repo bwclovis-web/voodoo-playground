@@ -1,6 +1,17 @@
-import meta from "stories/Button.stories"
-
 export default {
+  codeConfirm: {
+    continueButton: "繼續",
+    heading: "檢查您的收件箱！",
+    meta: {
+      description: "輸入發送到您的電子郵件的代碼",
+      title: "代碼確認"
+    },
+    newCode: {
+      button: "請求新代碼",
+      heading: "沒有收到代碼？"
+    },
+    subheading: "我們剛剛向您發送了一個臨時密碼。請在下面輸入。"
+  },
   createAccount: {
     continueButton: "繼續使用電子郵件地址",
     heading: "繼續使用 RUSH 堆棧",
@@ -12,6 +23,7 @@ export default {
   },
   global: {
     formLabels: {
+      code: "請輸入代碼",
       email: "電子郵件地址",
       password: "密碼"
     },

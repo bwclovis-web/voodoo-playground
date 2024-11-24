@@ -1,4 +1,17 @@
 export default {
+  codeConfirm: {
+    continueButton: "Continue",
+    heading: "Check your inbox!",
+    meta: {
+      description: "Enter the code sent to your email",
+      title: "Code Confirmation"
+    },
+    newCode: {
+      button: "Request New Code",
+      heading: "Did not receive the code?"
+    },
+    subheading: "We've just emailed you a temporary password. Please enter it below."
+  },
   createAccount: {
     continueButton: "Continue with email address",
     heading: "Continue to RUSH stack",
@@ -10,6 +23,7 @@ export default {
   },
   global: {
     formLabels: {
+      code: "Please enter code",
       email: "Email Address",
       password: "Password"
     },

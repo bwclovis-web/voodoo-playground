@@ -1,6 +1,17 @@
-import meta from "stories/Button.stories"
-
 export default {
+  codeConfirm: {
+    continueButton: "Continuer",
+    heading: "Vérifiez votre boîte de réception!",
+    meta: {
+      description: "Entrez le code envoyé à votre adresse e-mail",
+      title: "Confirmation du code"
+    },
+    newCode: {
+      button: "Demander un nouveau code",
+      heading: "Vous n'avez pas reçu le code?"
+    },
+    subheading: "Nous venons de vous envoyer un mot de passe temporaire par e-mail. Veuillez le saisir ci-dessous."
+  },
   createAccount: {
     continueButton: "Continuer avec l'adresse e-mail",
     heading: "Continuer avec la pile RUSH",
@@ -12,6 +23,7 @@ export default {
   },
   global: {
     formLabels: {
+      code: "Veuillez saisir le code",
       email: "Adresse e-mail",
       password: "Mot de passe"
     },

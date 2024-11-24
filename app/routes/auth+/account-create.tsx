@@ -13,12 +13,13 @@ import { useTranslation } from "react-i18next"
 import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
 import { HoneypotInputs } from 'remix-utils/honeypot/react'
 
+import { Button } from '~/components/Atoms/Button/Button'
 import Input from '~/components/Atoms/Input/Input'
 import metaUtil, { MetaData } from '~/components/Utility/metaUtil'
 import { commitSession, getSession } from '~/modules/auth/auth-session.server'
 import { auth } from '~/modules/auth/auth.server'
 import i18nServer from '~/modules/i18n/i18n.server'
-import { ROUTE_PATH as AUTH_VERIFY_PATH } from '~/routes/auth+/VerifyCode'
+import { ROUTE_PATH as AUTH_VERIFY_PATH } from '~/routes/auth+/verify'
 import { ROUTE_PATH as DASHBOARD_PATH } from '~/routes/dashboard+/_index'
 import { validateCSRF } from '~/utils/server/csrf.server'
 import { checkHoneypot } from '~/utils/server/honeypot.server'
@@ -122,9 +123,9 @@ export default function AccountCreatePage() {
           )}
         </div>
 
-        <button type="submit" className="w-full">
+        <Button variant="secondary" type="submit" className="w-full">
           {t("createAccount.continueButton")}
-        </button>
+        </Button>
       </Form>
 
       <p className="px-12 text-center text-sm font-normal leading-normal text-primary/60">

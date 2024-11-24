@@ -2,12 +2,13 @@
 import { getFormProps, useForm } from "@conform-to/react"
 import { getZodConstraint, parseWithZod } from "@conform-to/zod"
 import { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction, data } from "@remix-run/node"
-import { Form, Link, useActionData, useLoaderData, useSearchParams } from "@remix-run/react"
+import { Form, useActionData, useLoaderData, useSearchParams } from "@remix-run/react"
 import { useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { AuthenticityTokenInput } from "remix-utils/csrf/react"
 import { HoneypotInputs } from "remix-utils/honeypot/react"
 
+import { Button, CustomLink } from "~/components/Atoms/Button/Button"
 import Input from "~/components/Atoms/Input/Input"
 import metaUtil, { MetaData } from "~/components/Utility/metaUtil"
 import { commitSession, getSession } from "~/modules/auth/auth-session.server"
@@ -105,12 +106,9 @@ const LoginPage = () => {
             )}
           </div>
 
-          <button
-            type="submit"
-            className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
-          >
+          <Button type="submit">
             {t("global.login")}
-          </button>
+          </Button>
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <input
@@ -127,16 +125,17 @@ const LoginPage = () => {
               </label>
             </div>
             <div className="text-center text-sm text-gray-500">
-              <span>{t("logIn.noAccountText")} </span>
-              <Link
-                className="text-blue-500 underline"
-                to={{
+              <span>{t("logIn.noAccountText")}</span>
+              <CustomLink
+                variant="link"
+                size={"sm"}
+                url={{
                   pathname: CREATE_ACCOUNT_PATH,
                   search: searchParams.toString()
                 }}
               >
                 {t("global.signUp")}
-              </Link>
+              </CustomLink>
             </div>
           </div>
         </Form>

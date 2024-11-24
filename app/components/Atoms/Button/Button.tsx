@@ -11,22 +11,26 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>,
 
 interface LinkProps extends LinkHTMLAttributes<HTMLAnchorElement>,
   VariantProps<typeof buttonVariants> {
-  url: string
+  url: {
+    pathname: string
+    search?: string
+  }
 }
 
-const Button: FC<ButtonProps> = ({ className, size, intent, ...props }) => (
+const Button: FC<ButtonProps> = ({ className, size, variant, ...props }) => (
   <button className={
-    styleMerge(buttonVariants({ className, intent, size }))
+    styleMerge(buttonVariants({ className, size, variant }))
   } {...props} />
 )
 
-const Link: FC<LinkProps> = ({ className, size, intent, url, ...props }) => (
+const CustomLink: FC<LinkProps> = ({
+  className, size, variant, url, ...props }) => (
   <NavLink
     to={url}
     prefetch="intent"
     className={
-      styleMerge(buttonVariants({ className, intent, size }))
+      styleMerge(buttonVariants({ className, size, variant }))
     } {...props} />
 )
 
-export { Button, Link, buttonVariants }
+export { Button, CustomLink, buttonVariants }

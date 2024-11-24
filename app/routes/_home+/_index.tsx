@@ -7,13 +7,16 @@ import { useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { FaGlobe } from "react-icons/fa6"
 
-import { Button, Link } from "~/components/Atoms/Button/Button"
+import { Button, CustomLink } from "~/components/Atoms/Button/Button"
 import metaUtil, { MetaData } from "~/components/Utility/metaUtil"
 import { getAllFeatures } from "~/models/feature.server"
 import i18nServer from "~/modules/i18n/i18n.server"
 import { useOptionalUser } from "~/utils/userUtils"
 
 import banner from "../../images/rush.webp"
+import { ROUTE_PATH as LOGIN_PATH } from "../auth+/login"
+import { ROUTE_PATH as DASHBOARD_PATH } from "../dashboard+/_index"
+
 
 export const meta: MetaFunction = ({ data }) => (
   metaUtil(data as MetaData)
@@ -52,10 +55,12 @@ export default function Index() {
     <div className="flex flex-col gap-8 items-center h-full bg-purple-900" ref={container}>
       <img src={banner} alt="" className="absolute object-cover w-full h-full opacity-40" />
       <section className="content opacity-0 z-4 w-2/4 mx-auto border border-pink-600 py-5 px-3 rounded-md bg-pink-200/60 backdrop-blur text-pink-900 text-center">
-        <Link url="/auth/login" className="flex" intent="home">
+        <CustomLink url={{
+          pathname: user ? DASHBOARD_PATH : LOGIN_PATH
+        }} className="flex" variant="home">
           <FaGlobe />
           <span className="text-lg uppercase font-semibold">{t("global.login")}</span>
-        </Link>
+        </CustomLink>
         <h1 className="font-black tracking-wide text-6xl pb-3">{t("home.heading")}</h1>
         <p className="text-xl font-semibold tracking-wide mb-5">{t("home.subTitle")}</p>
         <Form className="flex justify-evenly">

@@ -1,18 +1,22 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react"
 import { getZodConstraint, parseWithZod } from "@conform-to/zod"
 import { ActionFunctionArgs, LoaderFunctionArgs, data } from "@remix-run/node"
-import { Form, redirect, useLoaderData } from "@remix-run/react"
+import { Form, redirect, useActionData, useLoaderData } from "@remix-run/react"
 import { useRef } from "react"
-import { z } from "zod"
+import { useTranslation } from "react-i18next"
+import { AuthenticityTokenInput } from "remix-utils/csrf/react"
+import { HoneypotInputs } from "remix-utils/honeypot/react"
 
+import Input from "~/components/Atoms/Input/Input"
 import { commitSession, getSession } from "~/modules/auth/auth-session.server"
 import { auth } from "~/modules/auth/auth.server"
 import { ROUTE_PATH as DASHBOARD_PATH } from '~/routes/dashboard+/_index'
-export const ROUTE_PATH = '/auth/verifyCode' as const
+import { validateCSRF } from "~/utils/server/csrf.server"
+import { checkHoneypot } from "~/utils/server/honeypot.server"
 
-export const VerifyLoginSchema = z.object({
-  code: z.string().min(6, 'Code must be at least 6 characters.')
-})
+import { VerifyCodeSchema } from "./Forms/validationUtils"
+export const ROUTE_PATH = '/auth/verify' as const
+
 export async function loader({ request }: LoaderFunctionArgs) {
   await auth.isAuthenticated(request, {
     successRedirect: DASHBOARD_PATH
@@ -37,10 +41,11 @@ export async function action({ request }: ActionFunctionArgs) {
   const url = new URL(request.url)
   const pathname = url.pathname
 
+
   const clonedRequest = request.clone()
   const formData = await clonedRequest.formData()
-  // await validateCSRF(formData, clonedRequest.headers)
-  // checkHoneypot(formData)
+  await validateCSRF(formData, clonedRequest.headers)
+  checkHoneypot(formData)
 
   await auth.authenticate('TOTP', request, {
     failureRedirect: pathname,
@@ -50,23 +55,23 @@ export async function action({ request }: ActionFunctionArgs) {
 
 const VerifyCodeForm = () => {
   const { authEmail, authError } = useLoaderData<typeof loader>()
+  const { t } = useTranslation()
   const inputRef = useRef<HTMLInputElement>(null)
+  const actionData = useActionData<{ errors?: { [key: string]: string } }>()
 
   const [codeForm, { code }] = useForm({
-    constraint: getZodConstraint(VerifyLoginSchema),
+    constraint: getZodConstraint(VerifyCodeSchema),
     onValidate({ formData }) {
-      return parseWithZod(formData, { schema: VerifyLoginSchema })
+      return parseWithZod(formData, { schema: VerifyCodeSchema })
     }
   })
   // const isHydrated = useHydrated()
   return (
     <div className="mx-auto flex h-full w-full max-w-96 flex-col items-center justify-center gap-6">
       <div className="mb-2 flex flex-col gap-2">
-        <p className="text-center text-2xl text-primary">Check your inbox!</p>
-        <p className="text-center text-base font-normal text-primary/60">
-          We've just emailed you a temporary password.
-          <br />
-          Please enter it below.
+        <h2 className="text-center">{t("codeConfirm.heading")}</h2>
+        <p className="text-center">
+          {t("codeConfirm.subheading")}
         </p>
       </div>
 
@@ -75,38 +80,15 @@ const VerifyCodeForm = () => {
         autoComplete="off"
         className="flex w-full flex-col items-start gap-1"
         {...getFormProps(codeForm)}>
-        {/* <AuthenticityTokenInput />
-        <HoneypotInputs /> */}
+        <AuthenticityTokenInput />
+        <HoneypotInputs />
 
         <div className="flex w-full flex-col gap-1.5">
-          <label htmlFor="code" className="sr-only">
-            Code
-          </label>
-          <input
-            placeholder="Code"
-            ref={inputRef}
-            required
-            className={`bg-transparent ${code.errors && 'border-destructive focus-visible:ring-destructive'
-              }`}
-            {...getInputProps(code, { type: 'text' })}
-          />
-        </div>
-
-        <div className="flex flex-col">
-          {!authError && code.errors && (
-            <span className="mb-2 text-sm text-destructive dark:text-destructive-foreground">
-              {code.errors.join(' ')}
-            </span>
-          )}
-          {authEmail && authError && (
-            <span className="mb-2 text-sm text-destructive dark:text-destructive-foreground">
-              {authError.message}
-            </span>
-          )}
+          <Input inputType={"text"} inputRef={inputRef} action={code} inputId="code" />
         </div>
 
         <button type="submit" className="w-full">
-          Continue
+          {t("codeConfirm.continueButton")}
         </button>
       </Form>
 
@@ -117,10 +99,10 @@ const VerifyCodeForm = () => {
         <HoneypotInputs /> */}
 
         <p className="text-center text-sm font-normal text-primary/60">
-          Did not receive the code?
+          {t("codeConfirm.newCode.heading")}
         </p>
         <button type="submit" variant="ghost" className="w-full hover:bg-transparent">
-          Request New Code
+          {t("codeConfirm.newCode.button")}
         </button>
       </Form>
     </div>

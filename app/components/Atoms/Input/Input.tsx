@@ -41,7 +41,7 @@ const Input: FC<InputProps> = ({
         htmlFor={inputId}
         className="block text-sm font-medium text-gray-700"
       >
-        {t(`global.formLabels.${inputType}`)}
+        {t(`global.formLabels.${inputId}`)}
       </label>
       <div className="mt-1">
         <input
