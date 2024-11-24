@@ -52,9 +52,9 @@ export default function Index() {
   )
 
   return (
-    <div className="flex flex-col gap-8 items-center h-full bg-purple-900" ref={container}>
+    <div className="flex flex-col gap-8 items-center h-full bg-purple-900 px-4" ref={container}>
       <img src={banner} alt="" className="absolute object-cover w-full h-full opacity-40" />
-      <section className="content opacity-0 z-4 w-2/4 mx-auto border border-pink-600 py-5 px-3 rounded-md bg-pink-200/60 backdrop-blur text-pink-900 text-center">
+      <section className="content opacity-0 z-4 w-full md:w-3/4 xl:w-2/4 mx-auto border border-pink-600 py-5 px-3 rounded-md bg-pink-200/60 backdrop-blur text-pink-900 text-center">
         <CustomLink url={{
           pathname: user ? DASHBOARD_PATH : LOGIN_PATH
         }} className="flex" variant="home">
@@ -81,7 +81,7 @@ export default function Index() {
           </details>
         </Form>
       </section>
-      <section className="features translate-y-full opacity-0 text-pink-900  min-h-max relative z-4 w-2/4 mx-auto border border-pink-600 py-5 px-3 rounded-md bg-pink-200/60 backdrop-blur ">
+      <section className="features translate-y-full opacity-0 text-pink-900  min-h-max relative z-4 w-full md:w-3/4 xl:w-2/4 mx-auto border border-pink-600 py-5 px-3 rounded-md bg-pink-200/60 backdrop-blur ">
         <h2 className="text-center text-5xl font-black">{t("home.featuresHeading")}</h2>
         {features.map(feature => (
           <details key={feature.id} className="flex flex-col gap-3">

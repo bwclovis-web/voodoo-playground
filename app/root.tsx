@@ -37,7 +37,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   )
 }
 
-export function Layout({ children }: { children: React.ReactNode }) {
+function Layout({ children }: { children: React.ReactNode }) {
   const nonce = useNonce()
   const loaderData = useRouteLoaderData<typeof loader>("root")
 

@@ -20,7 +20,8 @@
     "start:server": "node ./server.mjs",
     "typecheck": "tsc",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "demo": "run-p prisma:studio storybook dev db:docs"
   },
   "dependencies": {
     "@conform-to/react": "^1.2.2",

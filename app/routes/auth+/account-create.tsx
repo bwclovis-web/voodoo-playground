@@ -111,11 +111,6 @@ export default function AccountCreatePage() {
         <Input inputType="email" inputRef={inputRef} defaultValue={authEmail} action={email} />
 
         <div className="flex flex-col">
-          {!authError && email.errors && (
-            <span className="mb-2 text-sm text-destructive dark:text-destructive-foreground">
-              {email.errors.join(' ')}
-            </span>
-          )}
           {!authEmail && authError && (
             <span className="mb-2 text-sm text-destructive dark:text-destructive-foreground">
               {authError.message}

@@ -11,6 +11,15 @@ body {
   }
 }
 
+details {
+  p {
+    @apply pl-4;
+  }
+  a {
+    @apply text-slate-50;
+  }
+}
+
 @layer base {
   h1,
   h2,

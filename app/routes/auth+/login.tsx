@@ -81,7 +81,7 @@ const LoginPage = () => {
       <div className="mx-auto w-full max-w-md px-8">
         <h2>{t("logIn.heading")}</h2>
         <p className="pb-4 text-slate-500">{t("logIn.subheading")}</p>
-        <Form method="POST" className="space-y-6" {...getFormProps(loginForm)}>
+        <Form method="POST" className="space-y-4" {...getFormProps(loginForm)}>
           {/* SECURITY */}
           <AuthenticityTokenInput />
           <HoneypotInputs />
@@ -101,7 +101,7 @@ const LoginPage = () => {
           <div className="flex flex-col">
             {!authEmail && authError && (
               <span className="mb-2 text-sm text-destructive dark:text-destructive-foreground">
-                auth {authError.message}
+                {authError.message}
               </span>
             )}
           </div>
