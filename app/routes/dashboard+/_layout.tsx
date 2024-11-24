@@ -23,6 +23,8 @@ const createNewNote = (data: FormData, userID: string) => {
   const title = data.get('title') as string
   const body = data.get('body') as string
   createNote({ body, title, userId: userID })
+
+  return {}
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -41,7 +43,7 @@ export const action = async ({ request }: LoaderFunctionArgs) => {
   await validateCSRF(formData, request.headers)
   checkHoneypot(formData)
   if (user) {
-    createNewNote(formData, user.id)
+    return createNewNote(formData, user.id)
   }
   return {}
 }
@@ -50,14 +52,16 @@ const DashboardLayout = () => {
   const inputRef = useRef<HTMLInputElement>(null)
   const actionData = useActionData<{ errors?: { [key: string]: string } }>()
   const { t } = useTranslation()
+
   const [notesForm, { title, body }] = useForm({
     constraint: getZodConstraint(VerifyNoteSchema),
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: VerifyNoteSchema })
-    }
+    },
+    shouldValidate: 'onBlur',
+    shouldRevalidate: 'onInput'
   })
 
-  console.log(`%c notes`, 'background: #0047ab; color: #fff; padding: 2px:', notes)
   return (
     <div className="bg-slate-200 h-full">
       <div className="mx-auto flex gap-6 h-full">
