@@ -70,6 +70,8 @@ const LoginPage = () => {
   const passwordRef = useRef<HTMLInputElement>(null)
   const { t } = useTranslation()
 
+  console.log(`%c authError`, 'background: #0047ab; color: #fff; padding: 2px:', authError)
+
   const [loginForm, { email, password }] = useForm({
     constraint: getZodConstraint(LoginSchema),
     onValidate({ formData }) {
@@ -99,7 +101,7 @@ const LoginPage = () => {
             action={password}
           />
           <div className="flex flex-col">
-            {!authEmail && authError && (
+            {authError && (
               <span className="mb-2 text-sm text-destructive dark:text-destructive-foreground">
                 {authError.message}
               </span>

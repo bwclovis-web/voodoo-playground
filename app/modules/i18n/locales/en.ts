@@ -25,7 +25,8 @@ export default {
     formLabels: {
       code: "Please enter code",
       email: "Email Address",
-      password: "Password"
+      password: "Password",
+      userName: "Create User Name"
     },
     languageSelector: "Select a language",
     login: "Login",

@@ -13,7 +13,7 @@ export const verifyUserLogin = async (email: User["email"], password: Password["
   })
 
   if (!userWithPassword || !userWithPassword.password) {
-    throw new Error('User not found')
+    throw new Error('Customer not found')
   }
 
   const isPasswordValid = await bcrypt.compare(
