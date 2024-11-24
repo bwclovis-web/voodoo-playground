@@ -40,8 +40,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export async function action({ request }: ActionFunctionArgs) {
   const url = new URL(request.url)
   const pathname = url.pathname
-
-
   const clonedRequest = request.clone()
   const formData = await clonedRequest.formData()
   await validateCSRF(formData, clonedRequest.headers)

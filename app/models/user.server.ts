@@ -31,7 +31,10 @@ export const verifyUserLogin = async (email: User["email"], password: Password["
   return userWithoutPassword
 }
 
-export async function fetchSessionUser(request: Request, redirectUrl: string) {
+export const fetchSessionUser = async (
+  request: Request,
+  redirectUrl: string
+) => {
   const sessionUser = await auth.isAuthenticated(request)
   if (!sessionUser) {
     if (!redirectUrl) {
@@ -47,8 +50,8 @@ export const fetchUser = async (request: Request, redirectUrl: string) => {
   const sessionUser = await auth.isAuthenticated(request)
   const user = sessionUser?.id ?
     await prisma.user.findUnique({
-      where: { id: sessionUser.id },
-      include: { password: true }
+      include: { password: true },
+      where: { id: sessionUser.id }
     }) :
     null
 

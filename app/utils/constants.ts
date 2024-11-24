@@ -1,5 +1,5 @@
 const constants = {
-  AUTH_SESSION_KEY: "_auth"
+  AUTH_SESSION_KEY: "_authId"
 }
 
 export default constants

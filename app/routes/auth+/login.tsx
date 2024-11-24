@@ -70,14 +70,13 @@ const LoginPage = () => {
   const passwordRef = useRef<HTMLInputElement>(null)
   const { t } = useTranslation()
 
-  console.log(`%c authError`, 'background: #0047ab; color: #fff; padding: 2px:', authError)
-
   const [loginForm, { email, password }] = useForm({
     constraint: getZodConstraint(LoginSchema),
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: LoginSchema })
     }
   })
+
   return (
     <div className="flex min-h-full flex-col justify-center">
       <div className="mx-auto w-full max-w-md px-8">
