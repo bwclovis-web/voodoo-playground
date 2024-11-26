@@ -26,7 +26,8 @@ export default {
       code: "Ingresa el código",
       email: "Dirección de correo electrónico",
       password: "Contraseña",
-      userName: "Crear nombre de usuario"
+      userName: "Crear nombre de usuario",
+      noteTitle: "Título de la nota"
     },
     languageSelector: "Selecciona un idioma",
     login: "Iniciar sesión",

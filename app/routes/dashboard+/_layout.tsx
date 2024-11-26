@@ -79,7 +79,6 @@ const DashboardLayout = () => {
           <details className="mt-4">
             <summary className="cursor-pointer">Create A Note</summary>
             <Form method="POST" {...getFormProps(notesForm)}>
-              {/* SECURITY */}
               <AuthenticityTokenInput />
               <HoneypotInputs />
               <Input action={title} inputType={"text"} inputRef={inputRef} inputId="noteTitle" actionData={actionData} />

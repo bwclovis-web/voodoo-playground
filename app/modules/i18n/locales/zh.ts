@@ -26,7 +26,8 @@ export default {
       code: "請輸入代碼",
       email: "電子郵件地址",
       password: "密碼",
-      userName: "創建用戶名稱"
+      userName: "創建用戶名稱",
+      noteTitle: "筆記標題"
     },
     languageSelector: "選擇語言",
     login: "登錄",
