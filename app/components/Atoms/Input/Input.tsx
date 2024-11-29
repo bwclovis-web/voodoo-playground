@@ -50,7 +50,7 @@ const Input: FC<InputProps> = ({
           defaultValue={defaultValue ? defaultValue : ''}
           aria-invalid={actionData?.errors?.action ? true : undefined}
           aria-describedby={`${inputId}-error`}
-          className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+          className="w-full rounded-sm border border-gray-500 px-2 py-1 text-lg"
           {...getInputProps(action, { ariaAttributes: true, type: inputType })}
         />
         {action.errors && (

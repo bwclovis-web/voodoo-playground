@@ -1,7 +1,7 @@
 import { VariantProps, cva } from "class-variance-authority"
 
 export type ButtonVariants = VariantProps<typeof buttonVariants>
-export const buttonVariants = cva(["rounded border uppercase font-medium"], {
+export const buttonVariants = cva(["rounded-sm border uppercase font-medium"], {
   compoundVariants: [
     {
       class: "uppercase",
