@@ -13,7 +13,7 @@ import { defaultNS, fallbackLng, supportedLngs } from "~/modules/i18n/i18n"
 async function main() {
   await i18next
     .use(initReactI18next)
-    .use(Fetch) // Tell i18next to use the react-i18next plugin
+    .use(Fetch)
     .use(I18nextBrowserLanguageDetector)
     .init({
       backend: {

@@ -24,7 +24,7 @@ auth.use(new TOTPStrategy(
           return
         }
       }
-      await sendAuthEmail({ email, code, magicLink })
+      await sendAuthEmail({ code, email, magicLink })
     }
   },
   async ({ email }) => {

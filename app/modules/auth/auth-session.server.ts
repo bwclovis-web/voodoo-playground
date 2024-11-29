@@ -5,8 +5,6 @@ import constants from "~/utils/constants"
 
 import { auth } from "./auth.server"
 
-const USER_SESSION_KEY = "userId"
-
 export const authSessionStore = createCookieSessionStorage({
   cookie: {
     httpOnly: true,
@@ -40,7 +38,6 @@ export async function getTestSession(request: Request) {
 
 export async function getUserId(request: Request): Promise<User["id"] | undefined> {
   const session = await getTestSession(request)
-  console.log(`%c session`, 'background: #0047ab; color: #fff; padding: 2px:', session.get(USER_SESSION_KEY))
   return await session.get(constants.AUTH_SESSION_KEY)
 }
 

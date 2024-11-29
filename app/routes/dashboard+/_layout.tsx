@@ -1,8 +1,8 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react"
 import { getZodConstraint, parseWithZod } from "@conform-to/zod"
 import { LoaderFunctionArgs, redirect } from "@remix-run/node"
-import { Form, Outlet, useActionData, useLoaderData } from "@remix-run/react"
-import { useRef } from "react"
+import { Form, Outlet, useActionData, useFetcher, useLoaderData } from "@remix-run/react"
+import { useEffect, useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { AuthenticityTokenInput } from "remix-utils/csrf/react"
 import { HoneypotInputs } from "remix-utils/honeypot/react"
@@ -49,6 +49,7 @@ export const action = async ({ request }: LoaderFunctionArgs) => {
 }
 const DashboardLayout = () => {
   const { notes, user } = useLoaderData<typeof loader>()
+  const fetcher = useFetcher()
   const inputRef = useRef<HTMLInputElement>(null)
   const actionData = useActionData<{ errors?: { [key: string]: string } }>()
   const { t } = useTranslation()
@@ -78,7 +79,7 @@ const DashboardLayout = () => {
           </details>
           <details className="mt-4">
             <summary className="cursor-pointer">Create A Note</summary>
-            <Form method="POST" {...getFormProps(notesForm)}>
+            <fetcher.Form method="POST" {...getFormProps(notesForm)}>
               <AuthenticityTokenInput />
               <HoneypotInputs />
               <Input action={title} inputType={"text"} inputRef={inputRef} inputId="noteTitle" actionData={actionData} />
@@ -90,7 +91,7 @@ const DashboardLayout = () => {
               <Button type="submit">
                 {t("global.login")}
               </Button>
-            </Form>
+            </fetcher.Form>
 
           </details>
         </aside>
