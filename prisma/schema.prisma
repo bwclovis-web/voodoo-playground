@@ -44,3 +44,12 @@ model Feature {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model DashboardNavigation {
+  id        String   @id @default(cuid())
+  title     String
+  icon      String?
+  route     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

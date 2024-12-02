@@ -1,14 +1,15 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react"
 import { getZodConstraint, parseWithZod } from "@conform-to/zod"
 import { LoaderFunctionArgs, redirect } from "@remix-run/node"
-import { Form, Outlet, useActionData, useFetcher, useLoaderData } from "@remix-run/react"
-import { useEffect, useRef } from "react"
+import { Outlet, useActionData, useFetcher, useLoaderData } from "@remix-run/react"
+import { useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { AuthenticityTokenInput } from "remix-utils/csrf/react"
 import { HoneypotInputs } from "remix-utils/honeypot/react"
 
-import { Button } from "~/components/Atoms/Button/Button"
+import { Button, CustomLink } from "~/components/Atoms/Button/Button"
 import Input from "~/components/Atoms/Input/Input"
+import DashboardNav from "~/components/Molecules/DashboardNav/DashboardNav"
 import { createNote, getAllCustomerNotes } from "~/models/notes.server"
 import { fetchUser } from "~/models/user.server"
 import { requireSessionUser } from "~/modules/auth/auth-session.server"
@@ -59,31 +60,36 @@ const DashboardLayout = () => {
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: VerifyNoteSchema })
     },
-    shouldValidate: 'onBlur',
-    shouldRevalidate: 'onInput'
+    shouldRevalidate: 'onInput',
+    shouldValidate: 'onBlur'
   })
 
   return (
     <div className="bg-slate-200 h-full">
+      <DashboardNav />
       <div className="mx-auto flex gap-6 h-full">
-        <aside className="border-r-2 border-slate-50 pr-6 min-h-full p-6 bg-slate-300 w-1/5">
+        <aside className="border-r-2 border-slate-50 pr-6 h-full p-6 bg-slate-300 max-w-1/5">
           <h2>{user.username}</h2>
           <p>{user.email}</p>
-          <details className="mt-4">
+          <details className="my-4">
             <summary className="cursor-pointer">Notes</summary>
             {notes.length ? <ul>
               {notes.map(note => (
-                <li key={note.id}>{note.title}</li>
+                <li key={note.id}>
+                  <CustomLink variant="link" url={{ pathname: `/dashboard/${note.id}` }}>
+                    {note.title}
+                  </CustomLink>
+                </li>
               ))}
             </ul> : <p>No notes</p>}
           </details>
-          <details className="mt-4">
-            <summary className="cursor-pointer">Create A Note</summary>
+          <Button popovertarget="my-popover" variant="primary">New Note</Button>
+          <div popover="auto" id="my-popover" className="opacity-0 [transition-behavior:allow-discrete] duration-500 [&:is([open],:popover-open)]:opacity-100 [@starting-style]:[&:is([open],:popover-open)]:opacity-0 relative transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:w-full sm:max-w-96 sm:p-6">
             <fetcher.Form method="POST" {...getFormProps(notesForm)}>
               <AuthenticityTokenInput />
               <HoneypotInputs />
               <Input action={title} inputType={"text"} inputRef={inputRef} inputId="noteTitle" actionData={actionData} />
-              <textarea {...getInputProps(body, {
+              <textarea className="block w-full resize-none border border-slate-500 rounded-sm my-4" {...getInputProps(body, {
                 ariaAttributes: true,
                 type: "text"
               })} />
@@ -92,10 +98,9 @@ const DashboardLayout = () => {
                 {t("global.login")}
               </Button>
             </fetcher.Form>
-
-          </details>
+          </div>
         </aside>
-        <div className="py-6"><Outlet /></div>
+        <div className="py-6 overflow-hidden"><Outlet /></div>
       </div>
     </div>
   )
