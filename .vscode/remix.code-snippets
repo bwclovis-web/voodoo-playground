@@ -21,17 +21,18 @@
 			"}",
 		],
 	},
-	"default": {
-		"prefix": "/default",
+	"route": {
+		"prefix": "/route",
 		"scope": "typescriptreact,javascriptreact,typescript,javascript",
 		"body": [
-			"export default function ${TM_FILENAME_BASE/[^a-zA-Z0-9]*([a-zA-Z0-9])([a-zA-Z0-9]*)/${1:/capitalize}${2}/g}() {",
+			"const ${TM_FILENAME_BASE/[^a-zA-Z0-9]*([a-zA-Z0-9])([a-zA-Z0-9]*)/${1:/capitalize}${2}/g} = () => {",
 			" return (",
 			"  <div>",
 			"    <h1>Unknown Route</h1>",
 			"  </div>",
 			" )",
 			"}",
+			"export default ${TM_FILENAME_BASE/[^a-zA-Z0-9]*([a-zA-Z0-9])([a-zA-Z0-9]*)/${1:/capitalize}${2}/g}",
 		],
 	},
 	"headers": {
