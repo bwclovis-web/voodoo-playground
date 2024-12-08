@@ -50,5 +50,11 @@ export default {
     },
     noAccountText: "還沒有帳戶？",
     subheading: "輸入您的電子郵件地址和密碼以登錄"
+  },
+  notes: {
+    createNote: "創建筆記",
+    noNotes: "沒有筆記",
+    noteTitle: "筆記標題",
+    viewNote: "查看筆記"
   }
 }

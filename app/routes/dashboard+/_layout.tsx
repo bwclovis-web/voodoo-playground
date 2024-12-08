@@ -72,24 +72,24 @@ const DashboardLayout = () => {
           <h2>{user.username}</h2>
           <p>{user.email}</p>
           <details className="my-4">
-            <summary className="cursor-pointer">Notes</summary>
+            <summary className="cursor-pointer">{t("notes.viewNote")}</summary>
             {notes.length ? <ul>
               {notes.map(note => (
                 <li key={note.id}>
-                  <CustomLink variant="link" url={{ pathname: `/dashboard/${note.id}` }}>
+                  <CustomLink variant="link" url={{ pathname: `/dashboard/note/${note.id}` }}>
                     {note.title}
                   </CustomLink>
                 </li>
               ))}
-            </ul> : <p>No notes</p>}
+            </ul> : <p>{t("notes.noNotes")}</p>}
           </details>
-          <Button popovertarget="my-popover" variant="primary">New Note</Button>
-          <div popover="auto" id="my-popover" className="opacity-0 [transition-behavior:allow-discrete] duration-500 [&:is([open],:popover-open)]:opacity-100 [@starting-style]:[&:is([open],:popover-open)]:opacity-0 relative transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:w-full sm:max-w-96 sm:p-6">
+          <Button popovertarget="my-popover" size='sm' variant="primary">{t("notes.createNote")}</Button>
+          <div popover="auto" id="my-popover" className="opacity-0 transition-discrete duration-200 open:opacity-100 starting:open:opacity-0 relative transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:w-full sm:max-w-96 sm:p-6">
             <fetcher.Form method="POST" {...getFormProps(notesForm)}>
               <AuthenticityTokenInput />
               <HoneypotInputs />
               <Input action={title} inputType={"text"} inputRef={inputRef} inputId="noteTitle" actionData={actionData} />
-              <textarea className="block w-full resize-none border border-slate-500 rounded-sm my-4" {...getInputProps(body, {
+              <textarea className="block w-full resize-none border border-slate-500 rounded-sm my-4 field-sizing-content p-6" {...getInputProps(body, {
                 ariaAttributes: true,
                 type: "text"
               })} />

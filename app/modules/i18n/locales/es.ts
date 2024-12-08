@@ -50,5 +50,11 @@ export default {
     },
     noAccountText: "¿No tienes una cuenta?",
     subheading: "Ingresa tu dirección de correo electrónico y contraseña para iniciar sesión"
+  },
+  notes: {
+    createNote: "Crear nota",
+    noNotes: "Sin notas",
+    noteTitle: "Título de la nota",
+    viewNote: "Ver nota"
   }
 }

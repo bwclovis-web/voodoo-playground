@@ -2,7 +2,7 @@ import { Await, NavLink, data, useLoaderData, useParams } from "@remix-run/react
 import { Suspense } from "react"
 
 let cache: any
-export const loader = async ({ request }) => data({ characters: fetch('https://starwars-databank-server.vercel.app/api/v1/characters?page=15').then(res => res.json()) })
+export const loader = async ({ request }) => data({ characters: fetch('https://starwars-databank-server.vercel.app/api/v1/characters?page=25').then(res => res.json()) })
 
 
 export const clientLoader = async ({ serverLoader }) => {
