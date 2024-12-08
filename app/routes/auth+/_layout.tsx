@@ -9,6 +9,8 @@ import { getDomainPathname } from '~/utils/server/utility.server'
 
 export const ROUTE_PATH = '/auth' as const
 
+
+
 export async function loader({ request }: LoaderFunctionArgs) {
   await auth.isAuthenticated(request, {
     successRedirect: DASHBOARD_PATH
