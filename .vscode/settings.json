@@ -18,6 +18,8 @@
     "autodocs",
     "camelcase",
     "clsx",
+    "csfr",
+    "cuid",
     "gsap",
     "iife",
     "isaacs",
@@ -25,6 +27,8 @@
     "languagedetector",
     "picocolors",
     "Pipeable",
-    "typecheck"
+    "totp",
+    "typecheck",
+    "webp"
   ]
 }

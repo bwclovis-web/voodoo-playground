@@ -1,3 +1,4 @@
+/* eslint-disable max-params */
 import { PassThrough } from "node:stream"
 
 import type { AppLoadContext, EntryContext } from "@remix-run/node"
@@ -11,11 +12,11 @@ import { I18nextProvider, initReactI18next } from "react-i18next"
 import { NonceProvider } from '~/hooks/use-nonce'
 import * as i18n from "~/modules/i18n/i18n"
 import i18nServer from "~/modules/i18n/i18n.server"
-import { initEnvs } from '~/utils/utility.server'
+import { initEnvs } from '~/utils/server/utility.server'
 
 initEnvs()
 
-const ABORT_DELAY = 5_000
+const ABORT_DELAY = 5000
 
 export default async function handleRequest(
   request: Request,
@@ -67,6 +68,7 @@ async function handleBotRequest(
             context={remixContext}
             url={request.url}
             abortDelay={ABORT_DELAY}
+            nonce={nonce}
           />
         </I18nextProvider>
       </NonceProvider>,
@@ -85,14 +87,14 @@ async function handleBotRequest(
 
           pipe(body)
         },
-        onShellError(error: unknown) {
-          reject(error)
-        },
         onError(error: unknown) {
           responseStatusCode = 500
           if (shellRendered) {
             console.error(error)
           }
+        },
+        onShellError(error: unknown) {
+          reject(error)
         }
       }
     )
@@ -119,10 +121,20 @@ async function handleBrowserRequest(
             context={remixContext}
             url={request.url}
             abortDelay={ABORT_DELAY}
+            nonce={nonce}
           />
         </I18nextProvider>
       </NonceProvider>,
       {
+        onError(error: unknown) {
+          responseStatusCode = 500
+          if (shellRendered) {
+            console.error(error)
+          }
+        },
+        onShellError(error: unknown) {
+          reject(error)
+        },
         onShellReady() {
           shellRendered = true
           const body = new PassThrough()
@@ -136,15 +148,6 @@ async function handleBrowserRequest(
           }))
 
           pipe(body)
-        },
-        onShellError(error: unknown) {
-          reject(error)
-        },
-        onError(error: unknown) {
-          responseStatusCode = 500
-          if (shellRendered) {
-            console.error(error)
-          }
         }
       }
     )

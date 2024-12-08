@@ -8,12 +8,12 @@ import { installGlobals } from '@remix-run/node'
 import compression from 'compression'
 import express from 'express'
 import { rateLimit } from 'express-rate-limit'
-import helmet from 'helmet'
+// import helmet from 'helmet'
 import morgan from 'morgan'
 
 installGlobals()
 const METRICS_PORT = process.env.METRICS_PORT || 3030
-const PORT = process.env.APP_PORT || 5150
+const PORT = process.env.APP_PORT || 2112
 const NODE_ENV = process.env.NODE_ENV ?? 'development'
 const MAX_LIMIT_MULTIPLE = NODE_ENV !== 'production' ? 10_000 : 1
 
@@ -75,27 +75,27 @@ app.use((_, res, next) => {
   next()
 })
 
-app.use(helmet({
-  contentSecurityPolicy: {
-    crossOriginEmbedderPolicy: false,
-      directives: {
-        'connect-src': [ NODE_ENV === 'development' ? 'ws:' : null, "'self'" ].filter(Boolean),
-        'font-src': [ "'self'" ],
-        'frame-src': [ "'self'" ],
-        'img-src': [ "'self'", 'data:' ],
-        'script-src': [
-          "'strict-dynamic'",
-          "'self'",
-          (_, res) => `'nonce-${res.locals.cspNonce}'`
-        ],
-        'script-src-attr': [ (_, res) => `'nonce-${res.locals.cspNonce}'` ],
-        'upgrade-insecure-requests': null
-      },
-      // ❗Important: Remove `reportOnly` to enforce CSP. (Development only).
-      referrerPolicy: { policy: 'same-origin' },
-      reportOnly: true
-    }
-  }))
+// app.use(helmet({
+//   contentSecurityPolicy: {
+//     crossOriginEmbedderPolicy: false,
+//       directives: {
+//         'connect-src': [ NODE_ENV === 'development' ? 'ws:' : null, "'self'" ].filter(Boolean),
+//         'font-src': [ "'self'" ],
+//         'frame-src': [ "'self'" ],
+//         'img-src': [ "'self'", 'data:' ],
+//         'script-src': [
+//           "'strict-dynamic'",
+//           "'self'",
+//           (_, res) => `'nonce-${res.locals.cspNonce}'`
+//         ],
+//         'script-src-attr': [ (_, res) => `'nonce-${res.locals.cspNonce}'` ],
+//         'upgrade-insecure-requests': null
+//       },
+//       // ❗Important: Remove `reportOnly` to enforce CSP. (Development only).
+//       referrerPolicy: { policy: 'same-origin' },
+//       reportOnly: true
+//     }
+//   }))
 
 // Clean paths with trailing slashes
 app.use((req, res, next) => {

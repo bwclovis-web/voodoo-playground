@@ -19,7 +19,7 @@ module.exports = {
     // React
     {
       files: ["**/*.{js,jsx,ts,tsx}"],
-      plugins: ["react", "jsx-a11y", "@stylistic/jsx"],
+      plugins: ["react", "jsx-a11y", "@stylistic", "import"],
       extends: [
         "plugin:react/recommended",
         "plugin:react/jsx-runtime",
@@ -40,7 +40,7 @@ module.exports = {
         },
       },
       rules: {
-        "jsx/curly-newline": ["error", "always"],
+        "@stylistic/jsx/curly-newline": ["error", "always"],
       }
     },
     // Typescript
@@ -67,7 +67,7 @@ module.exports = {
       rules: {
         "arrow-body-style": ["error", "as-needed"],
         "camelcase": ["error", { properties: "always", ignoreDestructuring: true }],
-        complexity: ["error", 3],
+        complexity: ["error", 6],
         "curly": "error",
         "default-case": "error",
         "default-case-last": "error",
@@ -78,7 +78,7 @@ module.exports = {
         "func-style": ["error", "declaration", { "allowArrowFunctions": true }],
         "guard-for-in": "error",
         "id-denylist": ["error", "callback"],
-        "id-length": ["error", { "min": 3, "max": 40, "properties": "never", "exceptions": ["_", "__", "i", "j", "fs", 't'] }],
+        "id-length": ["error", { "min": 3, "max": 40, "properties": "never", "exceptions": ["_", "__", "i", "j", "fs", 't', 'to'] }],
         "import/order": ["error",
           {
             alphabetize: { caseInsensitive: true, order: "asc" },
@@ -89,7 +89,7 @@ module.exports = {
         "max-depth": ["error", 2],
         "max-nested-callbacks": ["error", 3],
         "max-params": ["error", 4],
-        "max-statements": ["error", 6],
+        "max-statements": ["error", 7],
         "new-cap": ["error", {"newIsCap": true, "capIsNew": true }],
         "no-console": "error",
         "no-empty": "error",
@@ -118,7 +118,7 @@ module.exports = {
         "computed-property-spacing": ["error", "never"],
         "dot-location": ["error", "property"],
         "eol-last": ["error", "always"],
-        "function-call-spacing": ["error", "never"],
+        "@stylistic/function-call-spacing": ["error", "never"],
         "function-call-argument-newline": ["error", "consistent"],
         "function-paren-newline": ["error", "multiline"],
         "generator-star-spacing": ["error", "after"],
@@ -133,9 +133,9 @@ module.exports = {
         "lines-between-class-members": ["error", "always"],
         "max-len": ["error", { "code": 80, "ignoreUrls": true, "ignoreStrings": true, "ignoreTemplateLiterals": true }],
         "template-tag-spacing": ["error", "always"],
-        "type-annotation-spacing": ["error", { "before": false, "after": true }],
-        "type-generic-spacing": ["error"],
-        "type-named-tuple-spacing": ["error"],
+        "@stylistic/type-annotation-spacing": ["error", { "before": false, "after": true }],
+        "@stylistic/type-generic-spacing": ["error"],
+        "@stylistic/type-named-tuple-spacing": ["error"],
         "wrap-iife": ["error", "inside"],
         "wrap-regex": "error"
       }

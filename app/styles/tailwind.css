@@ -1,12 +1,131 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-html,
-body {
-  @apply bg-white dark:bg-gray-950;
+@theme {
+  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
+  /* Colors */
+  --color-accent-100: hsl(214 95% 93%);
+  --color-accent-200: hsl(213 97% 87%);
+  --color-accent-300: hsl(212 95% 78%);
+  --color-accent-400: hsl(213 93% 68%);
+  --color-accent-50: hsl(214 100% 97%);
+  --color-accent-500: hsl(217 90% 57%);
+  --color-accent-600: hsl(221 82% 53%);
+  --color-accent-700: hsl(224 76% 48%);
+  --color-accent-800: hsl(226 70% 40%);
+  --color-accent-900: hsl(225 63% 33%);
+  --color-accent-950: hsl(226 57% 21%);
+  --color-grey-100: hsl(0 0 91%);
+  --color-grey-200: hsl(0 0 82%);
+  --color-grey-300: hsl(0 0 69%);
+  --color-grey-400: hsl(0 0 60%);
+  --color-grey-50: hsl(0 0 96%);
+  --color-grey-500: hsl(0 0 43%);
+  --color-grey-600: hsl(0 0 36%);
+  --color-grey-700: hsl(0 0 31%);
+  --color-grey-800: hsl(0 0 27%);
+  --color-grey-900: hsl(0 0 24%);
+  --color-grey-950: hsl(0 0 15%);
+  --color-primary-50: hsl(354 71% 97%);
+  --color-primary-100: hsl(351 70% 95%);
+  --color-primary-200: hsl(351 65% 90%);
+  --color-primary-300: hsl(350 65% 77%);
+  --color-primary-400: hsl(349 64% 71%);
+  --color-primary-500: hsl(347 61% 60%);
+  --color-primary-600: hsl(344 52% 50%);
+  --color-primary-700: hsl(343 56% 41%);
+  --color-primary-800: hsl(341 54% 35%);
+  --color-primary-900: hsl(339 51% 30%);
+  --color-primary-950: hsl(340 60% 16%);
+  --color-secondary-100: hsl(48 96% 89%);
+  --color-secondary-200: hsl(47 97% 77%);
+  --color-secondary-300: hsl(46 96% 65%);
+  --color-secondary-400: hsl(43 96% 56%);
+  --color-secondary-50: hsl(48 100% 96%);
+  --color-secondary-500: hsl(38 91% 50%);
+  --color-secondary-600: hsl(32 94% 44%);
+  --color-secondary-700: hsl(26 90% 39%);
+  --color-secondary-800: hsl(22 83% 31%);
+  --color-secondary-900: hsl(21 78% 26%);
+  --color-secondary-950: hsl(21 92% 14%);
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@layer utilities {
+  html,
+  body {
+    @apply bg-white dark:bg-gray-950;
+
+    @media (prefers-color-scheme: dark) {
+      color-scheme: dark;
+    }
+  }
+
+  details {
+    p {
+      @apply pl-4;
+    }
+    a {
+      @apply text-slate-50;
+    }
+  }
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold leading-7;
+  }
+
+  a {
+    @apply text-blue-500 dark:text-blue-300;
+  }
+
+  h2 {
+    font-size: clamp(1.6rem, 4vw, 2rem);
+    @apply font-bold mb-6 text-slate-700;
+  }
+
+  p {
+    font-size: clamp(0.6rem, 4vw, 1rem);
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply text-purple-500 dark:text-blue-300 hover:text-purple-700 dark:hover:text-blue-400 font-bold tracking-wide transition-colors duration-200;
+
+    &.active {
+      @apply border-fuchsia-950 border-b-2 text-slate-700;
+    }
+
+    &.pending {
+      @apply text-gray-500 scale-100;
+    }
+
+    &.transitioning {
+    }
   }
 }

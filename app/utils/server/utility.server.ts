@@ -31,3 +31,17 @@ export const singleton = <Value>(
   g.__singletons[name] ??= valueFactory()
   return g.__singletons[name] as Value
 }
+
+export const mergeHeaders = (...headers: Array<ResponseInit['headers'] | null | undefined>) => {
+  const mergedHeaders = new Headers()
+
+  for (const header of headers) {
+    if (!header) {
+      continue
+    }
+    for (const [key, value] of new Headers(header).entries()) {
+      mergedHeaders.append(key, value)
+    }
+  }
+  return mergedHeaders
+}
