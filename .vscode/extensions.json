@@ -4,13 +4,14 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "prisma.prisma",
-    "qwtel.sqlite-viewer",
+    "ckolkman.vscode-postgres",
     "yoavbls.pretty-ts-errors",
     "github.vscode-github-actions",
     "streetsidesoftware.code-spell-checker",
     "eamodio.gitlens",
     "techer.open-in-browser",
     "bradlc.vscode-tailwindcss",
-    "hwencc.html-tag-wrapper"
+    "hwencc.html-tag-wrapper",
+    "rangav.vscode-thunder-client"
   ]
 }
