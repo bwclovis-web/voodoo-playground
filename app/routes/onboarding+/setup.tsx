@@ -97,7 +97,7 @@ const AccountSetup = () => {
         />
       </fieldset>
       <button className="w-full" type="submit">
-        {'Continue'}
+        Continue
       </button>
     </Form>
   )
