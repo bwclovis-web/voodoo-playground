@@ -25,7 +25,6 @@ export default defineConfig({
         v3_routeConfig: true,
       },
       ignoredRouteFiles: ['**/.*'],
-
     }),
     tsconfigPaths()
   ]

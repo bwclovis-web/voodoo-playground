@@ -64,6 +64,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",
     "@inquirer/prompts": "^7.1.0",
+    "@react-router/remix-config-routes-adapter": "^0.0.0-nightly-bf7ecb711-20240911",
     "@remix-run/dev": "2.15.0",
     "@storybook/addon-essentials": "^8.4.4",
     "@storybook/addon-interactions": "^8.4.4",
