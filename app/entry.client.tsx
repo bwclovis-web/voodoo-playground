@@ -1,4 +1,3 @@
-/* eslint-disable import/no-named-as-default-member */
 import { RemixBrowser } from "@remix-run/react"
 import i18next from "i18next"
 import I18nextBrowserLanguageDetector from "i18next-browser-languagedetector"
@@ -8,7 +7,7 @@ import { hydrateRoot } from "react-dom/client"
 import { I18nextProvider, initReactI18next } from "react-i18next"
 import { getInitialNamespaces } from "remix-i18next/client"
 
-import { defaultNS, fallbackLng, supportedLngs } from "~/modules/i18n/i18n"
+import { defaultNS, fallbackLng, supportedLanguages } from "~/modules/i18n/i18n"
 
 async function main() {
   await i18next
@@ -26,7 +25,7 @@ async function main() {
       },
       fallbackLng,
       ns: getInitialNamespaces(),
-      supportedLngs
+      supportedLngs: supportedLanguages
     })
 
   startTransition(() => {

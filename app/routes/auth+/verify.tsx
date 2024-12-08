@@ -1,7 +1,7 @@
-import { getFormProps, getInputProps, useForm } from "@conform-to/react"
+import { getFormProps, useForm } from "@conform-to/react"
 import { getZodConstraint, parseWithZod } from "@conform-to/zod"
 import { ActionFunctionArgs, LoaderFunctionArgs, data } from "@remix-run/node"
-import { Form, redirect, useActionData, useLoaderData } from "@remix-run/react"
+import { Form, redirect } from "@remix-run/react"
 import { useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { AuthenticityTokenInput } from "remix-utils/csrf/react"
@@ -52,10 +52,8 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 const VerifyCodeForm = () => {
-  const { authEmail, authError } = useLoaderData<typeof loader>()
   const { t } = useTranslation()
   const inputRef = useRef<HTMLInputElement>(null)
-  const actionData = useActionData<{ errors?: { [key: string]: string } }>()
 
   const [codeForm, { code }] = useForm({
     constraint: getZodConstraint(VerifyCodeSchema),
@@ -63,7 +61,6 @@ const VerifyCodeForm = () => {
       return parseWithZod(formData, { schema: VerifyCodeSchema })
     }
   })
-  // const isHydrated = useHydrated()
   return (
     <div className="mx-auto flex h-full w-full max-w-96 flex-col items-center justify-center gap-6">
       <div className="mb-2 flex flex-col gap-2">
@@ -90,16 +87,14 @@ const VerifyCodeForm = () => {
         </button>
       </Form>
 
-      {/* Request New Code. */}
-      {/* Email is already in session, input it's not required. */}
       <Form method="POST" className="flex w-full flex-col">
-        {/* <AuthenticityTokenInput />
-        <HoneypotInputs /> */}
+        <AuthenticityTokenInput />
+        <HoneypotInputs />
 
         <p className="text-center text-sm font-normal text-primary/60">
           {t("codeConfirm.newCode.heading")}
         </p>
-        <button type="submit" variant="ghost" className="w-full hover:bg-transparent">
+        <button type="submit" className="w-full hover:bg-transparent">
           {t("codeConfirm.newCode.button")}
         </button>
       </Form>

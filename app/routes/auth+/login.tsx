@@ -1,4 +1,3 @@
-/* eslint-disable max-statements */
 import { getFormProps, useForm } from "@conform-to/react"
 import { getZodConstraint, parseWithZod } from "@conform-to/zod"
 import { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction, data } from "@remix-run/node"
