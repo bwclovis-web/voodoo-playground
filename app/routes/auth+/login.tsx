@@ -1,12 +1,14 @@
+/* eslint-disable max-statements */
 import { getFormProps, useForm } from "@conform-to/react"
 import { getZodConstraint, parseWithZod } from "@conform-to/zod"
 import { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction, data } from "@remix-run/node"
-import { Form, Link, useActionData, useLoaderData, useSearchParams } from "@remix-run/react"
+import { Form, useActionData, useLoaderData, useSearchParams } from "@remix-run/react"
 import { useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { AuthenticityTokenInput } from "remix-utils/csrf/react"
 import { HoneypotInputs } from "remix-utils/honeypot/react"
 
+import { Button, CustomLink } from "~/components/Atoms/Button/Button"
 import Input from "~/components/Atoms/Input/Input"
 import metaUtil, { MetaData } from "~/components/Utility/metaUtil"
 import { commitSession, getSession } from "~/modules/auth/auth-session.server"
@@ -81,6 +83,7 @@ const LoginPage = () => {
         <h2>{t("logIn.heading")}</h2>
         <p className="pb-4 text-slate-500">{t("logIn.subheading")}</p>
         <Form method="POST" className="space-y-4" {...getFormProps(loginForm)}>
+          {/* SECURITY */}
           <AuthenticityTokenInput />
           <HoneypotInputs />
           <Input
@@ -104,20 +107,36 @@ const LoginPage = () => {
             )}
           </div>
 
-          <button className="bg-primary-600 p-2 text-primary-100" type="submit">
+          <Button type="submit">
             {t("global.login")}
-          </button>
+          </Button>
           <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <input
+                id="remember"
+                name="remember"
+                type="checkbox"
+                className="h-4 w-4 rounded-sm border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              <label
+                htmlFor="remember"
+                className="ml-2 block text-sm text-gray-900"
+              >
+                Remember me
+              </label>
+            </div>
             <div className="text-center text-sm text-gray-500">
               <span>{t("logIn.noAccountText")}</span>
-              <Link
-                to={{
+              <CustomLink
+                variant="link"
+                size={"sm"}
+                url={{
                   pathname: CREATE_ACCOUNT_PATH,
                   search: searchParams.toString()
                 }}
               >
                 {t("global.signUp")}
-              </Link>
+              </CustomLink>
             </div>
           </div>
         </Form>

@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import { User } from "@prisma/client"
 import { Authenticator } from 'remix-auth'
 import { FormStrategy } from 'remix-auth-form'

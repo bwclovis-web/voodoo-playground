@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import { getFormProps, useForm } from "@conform-to/react"
 import { getZodConstraint, parseWithZod } from "@conform-to/zod"
 import { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction, data, redirect } from "@remix-run/node"
@@ -96,7 +97,7 @@ const AccountSetup = () => {
         />
       </fieldset>
       <button className="w-full" type="submit">
-        Continue
+        {'Continue'}
       </button>
     </Form>
   )

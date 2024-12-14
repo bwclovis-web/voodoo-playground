@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { getFormProps, useForm } from '@conform-to/react'
 import { getZodConstraint, parseWithZod } from '@conform-to/zod'
 import type {
@@ -12,6 +13,7 @@ import { useTranslation } from "react-i18next"
 import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
 import { HoneypotInputs } from 'remix-utils/honeypot/react'
 
+import { Button } from '~/components/Atoms/Button/Button'
 import Input from '~/components/Atoms/Input/Input'
 import metaUtil, { MetaData } from '~/components/Utility/metaUtil'
 import { commitSession, getSession } from '~/modules/auth/auth-session.server'
@@ -75,6 +77,8 @@ export async function action({ request }: ActionFunctionArgs) {
 export default function AccountCreatePage() {
   const { authEmail, authError } = useLoaderData<typeof loader>()
   const inputRef = useRef<HTMLInputElement>(null)
+  // const isHydrated = useHydrated()
+  // const isPending = useIsPending()
   const { t } = useTranslation()
 
   const [emailForm, { email }] = useForm({
@@ -102,7 +106,7 @@ export default function AccountCreatePage() {
         {...getFormProps(emailForm)}>
         <AuthenticityTokenInput />
         <HoneypotInputs />
-
+        {/* Security */}
 
         <Input inputType="email" inputRef={inputRef} defaultValue={authEmail} action={email} />
 
@@ -114,10 +118,21 @@ export default function AccountCreatePage() {
           )}
         </div>
 
-        <button type="submit" className="w-full bg-accent-500 text-accent-100">
+        <Button variant="secondary" type="submit" className="w-full">
           {t("createAccount.continueButton")}
-        </button>
+        </Button>
       </Form>
+
+      <p className="px-12 text-center text-sm font-normal leading-normal text-primary/60">
+        By clicking continue, you agree to our{' '}
+        <a href="/" className="underline hover:text-primary">
+          Terms of Service
+        </a>{' '}
+        and{' '}
+        <a href="/" className="underline hover:text-primary">
+          Privacy Policy.
+        </a>
+      </p>
     </div>
   )
 }

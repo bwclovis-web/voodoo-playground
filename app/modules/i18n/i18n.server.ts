@@ -17,7 +17,7 @@ export default new RemixI18Next({
   detection: {
     cookie: localeCookie,
     fallbackLanguage: i18n.fallbackLng,
-    supportedLanguages: i18n.supportedLanguages
+    supportedLanguages: i18n.supportedLngs
   },
   i18next: {
     ...i18n,

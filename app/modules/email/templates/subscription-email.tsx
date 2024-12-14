@@ -10,7 +10,7 @@ import {
   Preview,
   Text,
 } from '@react-email/components'
-import { sendEmail } from '~/modules/email/email.server'
+import { sendEmail } from '#app/modules/email/email.server'
 
 type SubscriptionEmailOptions = {
   email: string

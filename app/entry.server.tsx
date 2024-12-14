@@ -16,7 +16,7 @@ import { initEnvs } from '~/utils/server/utility.server'
 
 initEnvs()
 
-const ABORT_DELAY = 5000
+const ABORT_DELAY = 5_000
 
 export default async function handleRequest(
   request: Request,
