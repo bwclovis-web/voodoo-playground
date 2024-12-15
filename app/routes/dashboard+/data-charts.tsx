@@ -1,6 +1,7 @@
 
 /* eslint-disable max-statements */
 import { Chart as ChartJS } from 'chart.js/auto'
+import autocolors from 'chartjs-plugin-autocolors'
 import localforage from "localforage"
 import { useContext, useEffect, useRef, useState } from "react"
 import { Chart as ReactChartJs } from "react-chartjs-2"
@@ -14,13 +15,30 @@ import { generateReport } from "~/utils/reportTemplate"
 import useSocket from "../../hooks/useSocket"
 export const options = {
   responsive: true,
+  elements: {
+    line: {
+      fill: false,
+      backgroundColor: "#f8a065",
+      borderColor: "#303aff"
+    },
+    point: {
+      backgroundColor: "#323244",
+      hoverBackgroundColor: "rgba(232,277,106, .9)",
+      radius: 5,
+      pointStyle: 'circle' as const,
+      hoverRadius: 15
+    }
+  },
   plugins: {
+    autocolors: {
+      mode: 'data' as const
+    },
     legend: {
-      position: 'top' as const
+      position: 'bottom' as const
     },
     title: {
       display: true,
-      text: 'Chart.js Bar Chart'
+      text: ''
     },
     zoom: {
       zoom: {
@@ -48,8 +66,9 @@ const Charts = () => {
     onDisconnect,
     connectSocket } = useSocket()
   const [reportData, setReportData] = useState<any>(null)
-  const { chartType } = useContext(ChartContext)
+  const { chartType, chartOptions } = useContext(ChartContext)
   const buttonText = isConnected ? "Disconnect" : "Connect"
+  ChartJS.register(autocolors)
   const ref = useRef()
 
   const chartData = {
@@ -58,7 +77,7 @@ const Charts = () => {
       {
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
         data: usage.map(item => item.cpuUse),
-        label: 'Dataset 1'
+        label: chartOptions.dataset
       }
     ]
   }
@@ -70,6 +89,11 @@ const Charts = () => {
       })
     }
   }, [])
+
+  useEffect(() => {
+    options.plugins.title.text = chartOptions.title
+    chartData.datasets[0].label = chartOptions.dataset
+  }, [chartOptions])
 
 
   const handleClick = () => {
@@ -85,7 +109,7 @@ const Charts = () => {
   }
 
   const saveDataset = async evt => {
-    localforage.setItem('key=1', JSON.stringify(usage))
+    localforage.setItem(chartOptions.title, JSON.stringify(usage))
   }
 
   return (
@@ -116,6 +140,7 @@ const Charts = () => {
           type={chartType}
           data={chartData}
         />
+        <Button size="sm" type="primary" onClick={() => ref?.current?.resetZoom()}>Reset Zoom</Button>
       </div>
     </div>
   )

@@ -26,6 +26,7 @@ const Input: FC<InputProps> = ({
   defaultValue,
   actionData,
   action,
+  onChange,
   ...props
 }) => {
   const { t } = useTranslation()
@@ -47,6 +48,7 @@ const Input: FC<InputProps> = ({
         <input
           ref={inputRef}
           required
+          onChange={onChange}
           defaultValue={defaultValue ? defaultValue : ''}
           aria-invalid={actionData?.errors?.action ? true : undefined}
           aria-describedby={`${inputId}-error`}
