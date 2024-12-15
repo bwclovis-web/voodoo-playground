@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import crypto from 'crypto'
+import http from 'http'
 import process from 'node:process'
 
 import prom from '@isaacs/express-prometheus-middleware'
@@ -10,6 +11,8 @@ import express from 'express'
 import { rateLimit } from 'express-rate-limit'
 // import helmet from 'helmet'
 import morgan from 'morgan'
+import os from 'os-utils'
+import { Server } from 'socket.io'
 
 installGlobals()
 const METRICS_PORT = process.env.METRICS_PORT || 3030
@@ -46,6 +49,8 @@ const generalRateLimit = rateLimit(defaultRateLimit)
 
 const app = express()
 const metricsApp = express()
+const server = http.createServer(app)
+const io = new Server(server)
 
 if (viteDevServer) {
   app.use(viteDevServer.middlewares)
@@ -133,6 +138,24 @@ app.all(
   })
 )
 
+io.on('connection', socket => {
 
-app.listen(PORT, () => console.log(`🤘 server running: http://localhost:${PORT}`))
+  socket.on('join', data => {
+    console.log(data)
+  })
+  setInterval(() => {
+    os.cpuUsage(thing => {
+      socket.emit("cpu", {
+        'cpuUse': thing,
+        'freeMem': os.freemem(),
+        'memUse': (os.totalmem() - os.freemem()) / os.totalmem(),
+        name: 'cpu',
+        'timestamp': new Date().getTime(),
+        'totalMem': os.totalmem(),
+        'usedMem': os.totalmem() - os.freemem()
+      })
+    })
+  }, 1000)
+})
+server.listen(PORT, () => console.log(`🤘 server running: http://localhost:${PORT}`))
 metricsApp.listen(METRICS_PORT, () => console.log(`✅ metrics ready: http://localhost:${METRICS_PORT}/metrics`))

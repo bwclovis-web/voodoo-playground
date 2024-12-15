@@ -11,16 +11,20 @@ interface DashboardNavProps extends HTMLProps<HTMLDivElement>,
 
 const navData = [
   {
-    title: "Dashboard",
-    href: "/dashboard"
+    href: "/dashboard",
+    title: "Dashboard"
   },
   {
-    title: "Settings",
-    href: "/dashboard/account/settings"
+    href: "/dashboard/account/settings",
+    title: "Settings"
   },
   {
-    title: "Long Call",
-    href: "/dashboard/long-call"
+    href: "/dashboard/long-call",
+    title: "Long Call"
+  },
+  {
+    href: "/dashboard/data-charts",
+    title: "Charts"
   }
 ]
 

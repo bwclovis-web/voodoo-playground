@@ -100,7 +100,9 @@ const DashboardLayout = () => {
             </fetcher.Form>
           </div>
         </aside>
-        <div className="py-6 overflow-hidden"><Outlet /></div>
+        <div className="py-6 overflow-hidden w-full pr-24">
+          <Outlet />
+        </div>
       </div>
     </div>
   )
