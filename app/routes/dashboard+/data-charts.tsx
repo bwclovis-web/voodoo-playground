@@ -140,7 +140,7 @@ const Charts = () => {
           type={chartType}
           data={chartData}
         />
-        <Button size="sm" type="primary" onClick={() => ref?.current?.resetZoom()}>Reset Zoom</Button>
+        <Button size="sm" variant="primary" onClick={() => ref?.current?.resetZoom()}>Reset Zoom</Button>
       </div>
     </div>
   )

@@ -25,6 +25,10 @@ const navData = [
   {
     href: "/dashboard/data-charts",
     title: "Charts"
+  },
+  {
+    href: "/dashboard/data-analysis",
+    title: "Analysis"
   }
 ]
 
